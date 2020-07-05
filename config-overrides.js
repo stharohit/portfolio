@@ -8,7 +8,8 @@ const {
   setWebpackOptimizationSplitChunks,
 } = require("customize-cra");
 const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
-// const AntDesignThemePlugin = require("../../index");
+const CompressionPlugin = require("compression-webpack-plugin");
+const zlib = require('zlib');
 const { getLessVars } = require("antd-theme-generator");
 
 const darkVars = {
@@ -38,6 +39,19 @@ module.exports = override(
     style: true,
   }),
   addWebpackPlugin(new AntDesignThemePlugin(options)),
+  addWebpackPlugin(
+    new CompressionPlugin({
+      filename: "[path].br[query]",
+      algorithm: "brotliCompress",
+      test: /\.(js|css|html|svg)$/,
+      compressionOptions: {
+        level: 11,
+      },
+      threshold: 10240,
+      minRatio: 0.8,
+      deleteOriginalAssets: false,
+    })
+  ),
   addLessLoader({
     lessOptions: {
       javascriptEnabled: true,
@@ -47,8 +61,7 @@ module.exports = override(
   setWebpackOptimizationSplitChunks({
     cacheGroups: {
       vendor: {
-        name: "node_vendors", // part of the bundle name and
-        // can be used in chunks array of HtmlWebpackPlugin
+        name: "node_vendors", 
         test: /[\\/]node_modules[\\/]/,
         chunks: "all",
       },
