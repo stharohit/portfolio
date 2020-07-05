@@ -36,7 +36,10 @@ const Home = (props: Props) => {
   if (image?.loading) return <Spin />;
   return (
     <MyLayout>
-      <div style={{ background: `url(${image?.imageBG})` }} className="homeBG"> 
+      <div
+        style={{ backgroundImage: `url(${image?.imageBG})` }}
+        className="homeBG"
+      >
         <div className="content-wrapper">
           <div className="myImage ill">
             {image?.myPic ? (

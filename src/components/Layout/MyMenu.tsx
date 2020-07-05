@@ -9,6 +9,7 @@ import {
   BarsOutlined,
 } from "@ant-design/icons";
 import ThemeSwitcher from "./ThemeSwitcher";
+import me from "assets/img/me.png";
 
 interface Props {}
 
@@ -47,7 +48,14 @@ const MyMenu = (props: Props) => {
 
   return (
     <React.Fragment>
-      <Menu defaultSelectedKeys={["1"]} selectedKeys={[pathname]}>
+      <Menu
+        defaultSelectedKeys={["1"]}
+        selectedKeys={[pathname]}
+        style={{ border: "none" }}
+      >
+        <div className="myImage">
+          <img src={me} alt="Rohit Man Shrestha - Front End Developer " />
+        </div>
         {MenuItems.map((menuField) => (
           <Menu.Item key={menuField.to} icon={<menuField.icon />}>
             <Link to={menuField.to} />

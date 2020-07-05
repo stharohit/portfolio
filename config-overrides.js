@@ -9,7 +9,6 @@ const {
 } = require("customize-cra");
 const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
-const zlib = require('zlib');
 const { getLessVars } = require("antd-theme-generator");
 
 const darkVars = {
