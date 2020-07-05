@@ -10,6 +10,7 @@ const {
 const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { getLessVars } = require("antd-theme-generator");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
 const darkVars = {
   ...getLessVars("./node_modules/antd/lib/style/themes/dark.less"),
 };
@@ -47,6 +48,11 @@ module.exports = override(
       threshold: 10240,
       minRatio: 0.8,
       deleteOriginalAssets: false,
+    })
+  ),
+  addWebpackPlugin(
+    new UglifyJsPlugin({
+      sourceMap: true,
     })
   ),
   addLessLoader({
