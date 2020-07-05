@@ -1,9 +1,11 @@
-import React from "react";
-import { Layout } from "antd";
-import MyMenu from "./MyMenu";
+import React, { lazy, Suspense } from "react";
+import { Layout, Spin } from "antd";
 import { MyLayoutProps } from "./interface";
-import MyContent from "./MyContent";
 import me from "assets/img/my_real_pic.jpg";
+// import MyContent from "./MyContent";
+import MyMenu from "./MyMenu";
+
+const MyContent = lazy(() => import("./MyContent"));
 
 const MyLayout = (props: MyLayoutProps) => {
   const { Sider } = Layout;
@@ -32,7 +34,9 @@ const MyLayout = (props: MyLayoutProps) => {
         </div>
         <MyMenu />
       </Sider>
-      <MyContent children={children} />
+      <Suspense fallback={<Spin />}>
+        <MyContent children={children} />
+      </Suspense>
     </Layout>
   );
 };
