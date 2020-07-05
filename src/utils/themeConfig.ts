@@ -1,3 +1,12 @@
 export const themeChanger = (vars: {}) => {
-    window.less.modifyVars(vars);
-}
+  let changed = window.less
+    .modifyVars(vars)
+    .then(() => {
+      return true;
+    })
+    .catch((err) => {
+      return err;
+    });
+
+  return changed;
+};

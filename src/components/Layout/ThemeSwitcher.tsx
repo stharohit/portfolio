@@ -3,6 +3,7 @@ import darkVars from "dark.json";
 import lightVars from "light.json";
 import { Switch } from "antd";
 import { IoMdSunny, IoMdMoon } from "react-icons/io";
+import { themeChanger } from "utils/themeConfig";
 
 interface Props {}
 
@@ -12,25 +13,30 @@ const ThemeSwitcher = (props: Props) => {
   );
 
   useEffect(() => {
-    let vars = localStorage.getItem("app-theme");
-    if (vars) {
-      window.less.modifyVars(Object.assign({}, JSON.parse(vars)));
-    }
+    const setThemeMode = () => {
+      let getCurrentVariables = localStorage.getItem("app-theme");
+      if (getCurrentVariables) {
+        themeChanger(Object.assign({}, JSON.parse(getCurrentVariables)));
+      }
+    };
+    setThemeMode();
   }, [themeMode]);
 
   const handleTheme = () => {
     if (themeMode === "dark") {
-      window.less.modifyVars(lightVars).then((res) => {
+      let changedTheme = themeChanger(lightVars);
+      if (changedTheme) {
         localStorage.setItem("theme-mode", "light");
         localStorage.setItem("app-theme", JSON.stringify(lightVars));
         setThemeMode("light");
-      });
+      }
     } else {
-      window.less.modifyVars(lightVars).then((res) => {
+      let changedTheme = themeChanger(lightVars);
+      if (changedTheme) {
         localStorage.setItem("theme-mode", "dark");
         localStorage.setItem("app-theme", JSON.stringify(darkVars));
         setThemeMode("dark");
-      });
+      }
     }
   };
   return (

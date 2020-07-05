@@ -10,13 +10,11 @@ const {
 const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { getLessVars } = require("antd-theme-generator");
-
 const darkVars = {
   ...getLessVars("./node_modules/antd/lib/style/themes/dark.less"),
 };
 const lightVars = {
   ...getLessVars("./node_modules/antd/lib/style/themes/compact.less"),
-  "@theme": "light",
 };
 fs.writeFileSync("./src/dark.json", JSON.stringify(darkVars));
 fs.writeFileSync("./src/light.json", JSON.stringify(lightVars));
@@ -53,14 +51,14 @@ module.exports = override(
   ),
   addLessLoader({
     lessOptions: {
+      modifyVars: {},
       javascriptEnabled: true,
-      modifyVars: lightVars,
     },
   }),
   setWebpackOptimizationSplitChunks({
     cacheGroups: {
       vendor: {
-        name: "node_vendors", 
+        name: "bundle_js",
         test: /[\\/]node_modules[\\/]/,
         chunks: "all",
       },

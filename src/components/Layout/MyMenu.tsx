@@ -9,7 +9,7 @@ import {
   BarsOutlined,
 } from "@ant-design/icons";
 import ThemeSwitcher from "./ThemeSwitcher";
-import me from "assets/img/me.png";
+import my from "assets/img/my_real_pic.jpg";
 
 interface Props {}
 
@@ -54,7 +54,7 @@ const MyMenu = (props: Props) => {
         style={{ border: "none" }}
       >
         <div className="myImage">
-          <img src={me} alt="Rohit Man Shrestha - Front End Developer " />
+          <img src={my} alt="Rohit Man Shrestha - Front End Developer " />
         </div>
         {MenuItems.map((menuField) => (
           <Menu.Item key={menuField.to} icon={<menuField.icon />}>
