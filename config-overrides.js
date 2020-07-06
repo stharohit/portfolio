@@ -10,7 +10,7 @@ const {
 const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { getLessVars } = require("antd-theme-generator");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const TerserPlugin = require("terser-webpack-plugin");
 const darkVars = {
   ...getLessVars("./node_modules/antd/lib/style/themes/dark.less"),
 };
@@ -51,20 +51,42 @@ module.exports = override(
     })
   ),
   addWebpackPlugin(
-    new UglifyJsPlugin({
-      sourceMap: true,
+    new TerserPlugin({
+      terserOptions: {
+        parse: {
+          ecma: 8,
+        },
+        compress: {
+          ecma: 5,
+          warnings: false,
+          comparisons: false,
+          inline: 2,
+        },
+        mangle: {
+          safari10: true,
+        },
+        output: {
+          ecma: 5,
+          comments: false,
+          ascii_only: true,
+        },
+      },
+      cache: true,
+      parallel: true,
+      sourceMap: true, // Must be set to true if using source-maps in production
     })
   ),
   addLessLoader({
     lessOptions: {
-      modifyVars: {},
+      modifyVars: lightVars,
       javascriptEnabled: true,
+      sourceMap: true,
     },
   }),
   setWebpackOptimizationSplitChunks({
     cacheGroups: {
       vendor: {
-        name: "bundle_js",
+        name: "main_js",
         test: /[\\/]node_modules[\\/]/,
         chunks: "all",
       },

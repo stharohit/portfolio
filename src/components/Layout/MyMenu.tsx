@@ -1,4 +1,4 @@
-import React, { useMemo, memo } from "react";
+import React, { useMemo, memo, Suspense, lazy } from "react";
 import { Menu } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -9,7 +9,7 @@ import {
   BarsOutlined,
 } from "@ant-design/icons";
 import ThemeSwitcher from "./ThemeSwitcher";
-import my from "assets/img/my_real_pic.jpg";
+const MenuImage = lazy(() => import("./MenuImage"));
 
 interface Props {}
 
@@ -53,9 +53,9 @@ const MyMenu = (props: Props) => {
         selectedKeys={[pathname]}
         style={{ border: "none" }}
       >
-        <div className="myImage">
-          <img src={my} alt="Rohit Man Shrestha - Front End Developer " />
-        </div>
+        <Suspense fallback="Menu Image Loading... ">
+          <MenuImage />
+        </Suspense>
         {MenuItems.map((menuField) => (
           <Menu.Item key={menuField.to} icon={<menuField.icon />}>
             <Link to={menuField.to} />

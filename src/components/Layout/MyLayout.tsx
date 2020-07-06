@@ -1,11 +1,11 @@
-import React, { lazy, Suspense, useState } from "react";
-import { Layout, Spin, Drawer, Button } from "antd";
+import React, { useState } from "react";
+import { Layout, Drawer, Button } from "antd";
 import { MyLayoutProps } from "./interface";
-// import MyContent from "./MyContent";
+import MyContent from "./MyContent";
 import MyMenu from "./MyMenu";
 import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
 
-const MyContent = lazy(() => import("./MyContent"));
+// const MyContent = lazy(() => import("./MyContent"));
 
 const MyLayout = (props: MyLayoutProps) => {
   const { Sider } = Layout;
@@ -76,9 +76,9 @@ const MyLayout = (props: MyLayoutProps) => {
       ) : (
         ""
       )}
-      <Suspense fallback={<Spin />}>
-        <MyContent children={children} />
-      </Suspense>
+      {/* <Suspense fallback={<Spin />}> */}
+      <MyContent children={children} />
+      {/* </Suspense> */}
     </Layout>
   );
 };

@@ -39,6 +39,7 @@ const ThemeSwitcher = (props: Props) => {
       }
     }
   };
+
   return (
     <React.Fragment>
       <IoMdSunny
