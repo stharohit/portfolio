@@ -39,15 +39,17 @@ module.exports = override(
   addWebpackPlugin(new AntDesignThemePlugin(options)),
   addWebpackPlugin(
     new CompressionPlugin({
-      filename: "[path].br[query]",
-      algorithm: "brotliCompress",
-      test: /\.(js|css|html|svg)$/,
-      compressionOptions: {
-        level: 11,
-      },
+      filename: "[path].gz[query]",
+      algorithm: "gzip",
+      test: /\.js$|\.css$|\.html$|\.jpg$/,
       threshold: 10240,
       minRatio: 0.8,
-      deleteOriginalAssets: false,
+      compressionOptions: {
+        chunkSize: 30 * 1024,
+        level: 11,
+      },
+      cache: true,
+      deleteOriginalAssets: true,
     })
   ),
   addWebpackPlugin(
