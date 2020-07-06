@@ -11,6 +11,7 @@ const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { getLessVars } = require("antd-theme-generator");
 const TerserPlugin = require("terser-webpack-plugin");
+var ProgressPlugin = require("webpack/lib/ProgressPlugin");
 const darkVars = {
   ...getLessVars("./node_modules/antd/lib/style/themes/dark.less"),
 };
@@ -41,15 +42,38 @@ module.exports = override(
     new CompressionPlugin({
       filename: "[path].gz[query]",
       algorithm: "gzip",
-      test: /\.js$|\.css$|\.html$|\.jpg$/,
+      test: /\.js$|\.css$|\.jpg$|\.less$/,
       threshold: 10240,
       minRatio: 0.8,
-      compressionOptions: {
-        chunkSize: 30 * 1024,
-        level: 11,
-      },
       cache: true,
-      deleteOriginalAssets: true,
+    })
+  ),
+  addWebpackPlugin(
+    new ProgressPlugin({
+      handler: (percentage, msg) => {
+        let print = "";
+
+        for (let i = 0; i < 10; i++) {
+          if (i <= Math.round(percentage * 10)) {
+            for (let j = 1; j <= Math.round(percentage * 10); j++) {
+              print = print + "="
+            }
+          } else {
+            for (let k = 1; k <= 10; k++) {
+              print = print + ""
+            }
+          }
+        }
+        console.clear();
+        console.log(msg + "\n");
+        console.log(
+          "[ " +
+            print +
+            " ] \n => Completion percentage: " +
+            (percentage * 100).toFixed(2) +
+            "%"
+        );
+      },
     })
   ),
   addWebpackPlugin(
@@ -88,7 +112,7 @@ module.exports = override(
   setWebpackOptimizationSplitChunks({
     cacheGroups: {
       vendor: {
-        name: "main_js",
+        name: "customBundle",
         test: /[\\/]node_modules[\\/]/,
         chunks: "all",
       },
