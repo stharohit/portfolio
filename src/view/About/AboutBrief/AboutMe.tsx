@@ -38,7 +38,7 @@ const AboutMe = (props: Props) => {
         About <span className="highlight">Me</span>
       </Title>
       <Row>
-        <Col span={24} xl={11} offset={1}>
+        <Col span={24} xl={{ span: 11, offset: 1 }}>
           <Title level={3}>Personal Information</Title>
           <List
             bordered={false}
@@ -51,7 +51,7 @@ const AboutMe = (props: Props) => {
             )}
           />
         </Col>
-        <Col span={24} xl={11} offset={1}>
+        <Col span={24} xl={11}>
           <Title level={3}>UI/UX Designer &amp; Developer</Title>
           <Paragraph>
             I am a <Text strong>Full Stack Web developer</Text> with 2 years of

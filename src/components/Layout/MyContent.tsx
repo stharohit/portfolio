@@ -1,35 +1,29 @@
 import React from "react";
-import { Layout, Button } from "antd";
-import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
+import { Layout, Button, Typography } from "antd";
+import { MenuOutlined } from "@ant-design/icons";
 
 interface Props {
   children: JSX.Element | Element;
   setDrawerVisible: Function;
   drawerVisible: boolean;
+  switchDrawer: boolean;
 }
 
 const MyContent = (props: Props) => {
-  const { Content } = Layout;
-  const { children, drawerVisible, setDrawerVisible } = props;
+  const { Content, Header } = Layout;
+  const { children, drawerVisible, setDrawerVisible, switchDrawer } = props;
+  const { Text } = Typography;
 
   return (
     <React.Fragment>
       <Content>
-        {drawerVisible && (
-          <Button
-            onClick={() => setDrawerVisible(!drawerVisible)}
-            style={{
-              position: "relative",
-              left: "10px",
-              top: "10px",
-              zIndex: 9999,
-              background: "none",
-              border: "none",
-              fontSize: "40px",
-            }}
-          >
-            {drawerVisible ? <CloseOutlined /> : <MenuOutlined />}
-          </Button>
+        {switchDrawer && (
+          <Header className="custom-header">
+            <Text>Rohit Man Shrestha</Text>
+            <Button onClick={() => setDrawerVisible(!drawerVisible)}>
+              <MenuOutlined />
+            </Button>
+          </Header>
         )}
         {children}
       </Content>

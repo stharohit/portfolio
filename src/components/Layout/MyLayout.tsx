@@ -3,6 +3,7 @@ import { Layout, Drawer } from "antd";
 import { MyLayoutProps } from "./interface";
 import MyContent from "./MyContent";
 import MyMenu from "./MyMenu";
+import { CloseCircleOutlined } from "@ant-design/icons";
 
 const MyLayout = (props: MyLayoutProps) => {
   const { Sider } = Layout;
@@ -32,8 +33,10 @@ const MyLayout = (props: MyLayoutProps) => {
         <>
           <Drawer
             visible={drawerVisible}
-            closable={false}
+            closable={true}
             destroyOnClose={true}
+            closeIcon={<CloseCircleOutlined />}
+            
           >
             <MyMenu />
           </Drawer>
@@ -41,6 +44,7 @@ const MyLayout = (props: MyLayoutProps) => {
       )}
       <MyContent
         children={children}
+        switchDrawer={switchDrawer}
         drawerVisible={drawerVisible}
         setDrawerVisible={setDrawerVisible}
       />
