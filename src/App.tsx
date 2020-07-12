@@ -1,6 +1,7 @@
 import React from "react";
 import Router from "components/Router/Router";
 import "./App.less";
+import { hot } from "react-hot-loader";
 
 const App = () => {
   return (
@@ -10,4 +11,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default process.env.NODE_ENV === "development" ? hot(module)(App) : App;

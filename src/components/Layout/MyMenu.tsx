@@ -1,5 +1,5 @@
 import React, { useMemo, memo, Suspense, lazy } from "react";
-import { Menu } from "antd";
+import { Menu, Skeleton } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import {
   HomeOutlined,
@@ -9,7 +9,7 @@ import {
   BarsOutlined,
 } from "@ant-design/icons";
 import ThemeSwitcher from "./ThemeSwitcher";
-const MenuImage = lazy(() => import("./MenuImage"));
+const MyImage = lazy(() => import("../MyImage"));
 
 interface Props {}
 
@@ -53,9 +53,16 @@ const MyMenu = (props: Props) => {
         selectedKeys={[pathname]}
         style={{ border: "none" }}
       >
-        <Suspense fallback="Menu Image Loading... ">
-          <MenuImage />
-        </Suspense>
+        <div className="myImage">
+          <Suspense
+            fallback={
+              <Skeleton.Image style={{ width: "100%", height: "100%" }} />
+            }
+          >
+            <MyImage />
+          </Suspense>
+        </div>
+
         {MenuItems.map((menuField) => (
           <Menu.Item key={menuField.to} icon={<menuField.icon />}>
             <Link to={menuField.to} />

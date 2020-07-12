@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import { Layout, Drawer, Button } from "antd";
+import { Layout, Drawer } from "antd";
 import { MyLayoutProps } from "./interface";
 import MyContent from "./MyContent";
 import MyMenu from "./MyMenu";
-import { MenuOutlined, CloseOutlined } from "@ant-design/icons";
-
-// const MyContent = lazy(() => import("./MyContent"));
 
 const MyLayout = (props: MyLayoutProps) => {
   const { Sider } = Layout;
@@ -28,42 +25,10 @@ const MyLayout = (props: MyLayoutProps) => {
         width="280"
         collapsedWidth="0"
         trigger={null}
-        // zeroWidthTriggerStyle={{
-        //   position: "fixed",
-        //   top: "10px",
-        //   right: "10px",
-        //   borderRadius: "50%",
-        //   width: "50px",
-        //   height: "50px",
-        //   display: "flex",
-        //   justifyContent: "center",
-        //   alignItems: "center",
-        //   zIndex: 999999,
-        // }}
       >
-        {switchDrawer ? (
-          <Button
-            onClick={() => setDrawerVisible(!drawerVisible)}
-            style={{
-              position: "fixed",
-              left: "10px",
-              top: "10px",
-              zIndex: 9999,
-              background: "none",
-              border: "none",
-              width: "50px",
-              height: "50px",
-              borderRadius: "50%",
-              fontSize: "60px",
-            }}
-          >
-            {drawerVisible ? <CloseOutlined /> : <MenuOutlined />}
-          </Button>
-        ) : (
-          <MyMenu />
-        )}
+        {!switchDrawer && <MyMenu />}
       </Sider>
-      {switchDrawer ? (
+      {switchDrawer && (
         <>
           <Drawer
             visible={drawerVisible}
@@ -73,12 +38,12 @@ const MyLayout = (props: MyLayoutProps) => {
             <MyMenu />
           </Drawer>
         </>
-      ) : (
-        ""
       )}
-      {/* <Suspense fallback={<Spin />}> */}
-      <MyContent children={children} />
-      {/* </Suspense> */}
+      <MyContent
+        children={children}
+        drawerVisible={drawerVisible}
+        setDrawerVisible={setDrawerVisible}
+      />
     </Layout>
   );
 };

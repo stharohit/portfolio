@@ -6,12 +6,15 @@ const {
   addLessLoader,
   addWebpackPlugin,
   setWebpackOptimizationSplitChunks,
+  addWebpackAlias,
+  addWebpackModuleRule,
 } = require("customize-cra");
 const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { getLessVars } = require("antd-theme-generator");
 const TerserPlugin = require("terser-webpack-plugin");
 var ProgressPlugin = require("webpack/lib/ProgressPlugin");
+const LessPluginCleanCSS = require("less-plugin-clean-css");
 const darkVars = {
   ...getLessVars("./node_modules/antd/lib/style/themes/dark.less"),
 };
@@ -29,7 +32,10 @@ const options = {
     new Set([...Object.keys(darkVars), ...Object.keys(lightVars)])
   ),
   generateOnce: false, // generate color.less on each compilation
+  minify: true,
 };
+
+const rewireReactHotLoader = require("react-app-rewire-hot-loader");
 
 module.exports = override(
   fixBabelImports("import", {
@@ -53,15 +59,11 @@ module.exports = override(
       handler: (percentage, msg) => {
         let print = "";
 
-        for (let i = 0; i < 10; i++) {
-          if (i <= Math.round(percentage * 10)) {
-            for (let j = 1; j <= Math.round(percentage * 10); j++) {
-              print = print + "="
-            }
+        for (let i = 0; i < 100; i++) {
+          if (i <= Math.round(percentage * 100)) {
+            print = print + "=";
           } else {
-            for (let k = 1; k <= 10; k++) {
-              print = print + ""
-            }
+            print = print + "_";
           }
         }
         console.clear();
@@ -99,7 +101,6 @@ module.exports = override(
       },
       cache: true,
       parallel: true,
-      sourceMap: true, // Must be set to true if using source-maps in production
     })
   ),
   addLessLoader({
@@ -107,6 +108,9 @@ module.exports = override(
       modifyVars: lightVars,
       javascriptEnabled: true,
       sourceMap: true,
+      plugins: [
+        new LessPluginCleanCSS({ advanced: true }),
+      ],
     },
   }),
   setWebpackOptimizationSplitChunks({
@@ -122,5 +126,23 @@ module.exports = override(
         minSize: 0,
       },
     },
-  })
+  }),
+  addWebpackModuleRule({
+    test: /\.(png|svg|jpg|gif|pdf)$/,
+    use: [
+      {
+        loader: "file-loader",
+        options: {
+          name: "[name].[ext]",
+        },
+      },
+    ],
+  }),
+  addWebpackAlias({
+    "react-dom": "@hot-loader/react-dom",
+  }),
+  (config, env) => {
+    config = rewireReactHotLoader(config, env);
+    return config;
+  }
 );

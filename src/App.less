@@ -1,12 +1,61 @@
 @import "~antd/lib/style/themes/default.less";
 
-@primary-color: @red-6;
-
-.ant-layout {
-  height: 100vh;
-  max-height: 100vh;
+@font-face {
+  font-family: "Poppins";
+  src: url("./assets//fonts/poppins/Poppins-Bold.eot");
+  src: url("./assets//fonts/poppins/Poppins-Bold.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets//fonts/poppins/Poppins-Bold.woff2") format("woff2"),
+    url("./assets//fonts/poppins/Poppins-Bold.woff") format("woff"),
+    url("./assets//fonts/poppins/Poppins-Bold.ttf") format("truetype"),
+    url("./assets//fonts/poppins/Poppins-Bold.svg#Poppins-Bold") format("svg");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
 }
 
+@font-face {
+  font-family: "Open Sans";
+  src: url("./assets//fonts/opensans/OpenSans-Regular.eot");
+  src: url("./assets//fonts/opensans/OpenSans-Regular.eot?#iefix")
+      format("embedded-opentype"),
+    url("./assets//fonts/opensans/OpenSans-Regular.woff2") format("woff2"),
+    url("./assets//fonts/opensans/OpenSans-Regular.woff") format("woff"),
+    url("./assets//fonts/opensans/OpenSans-Regular.ttf") format("truetype"),
+    url("./assets//fonts/opensans/OpenSans-Regular.svg#OpenSans-Regular")
+      format("svg");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  letter-spacing: 1px;
+}
+
+body {
+  font-family: "Open Sans";
+  font-weight: 500;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins";
+  font-weight: 700;
+}
+
+// variable changes
+@primary-color: @red-6;
+@normal-color: #999;
+
+// scrollbar
 &::-webkit-scrollbar {
   width: 2px;
   background-color: #f5f5f5;
@@ -18,39 +67,52 @@
   background-color: @primary-color;
 }
 
-*{
+* {
   scrollbar-color: @primary-color #f5f5f5;
   scrollbar-width: thin;
 }
 
+.ant-layout {
+  height: 100vh;
+  max-height: 100vh;
+}
+
+.ant-drawer-body {
+  overflow: visible;
+}
+
 .ant-layout-sider {
   // height: 100vh;
-  background: @component-background;
+  // background: @component-background;
   z-index: 9999;
 
   .ant-layout-sider-zero-width-trigger {
     background: @primary-color;
   }
 
-  .ant-menu {
+  .ant-menu.ant-menu-root {
     height: 100%;
-  }
-
-  .ant-menu-root {
-    height: 100vh;
     overflow-y: auto;
-    background-color: @component-background;
     border: none !important;
+    box-shadow: @box-shadow-base;
+    background: @component-background;
 
     &.ant-menu-vertical {
       border: none;
     }
 
     .ant-menu-item {
-      color: @text-color;
       text-align: center;
-      font-size: 18px;
-      margin-bottom: 15px;
+      font-size: 16px;
+      margin-bottom: 12px;
+
+      &:hover {
+        color: @primary-color;
+      }
+
+      a:hover {
+        color: @primary-color;
+      }
 
       &.ant-menu-item-selected {
         background: none;
@@ -79,6 +141,7 @@
   }
   .ant-layout-content {
     height: 100vh;
+    overflow: auto;
   }
 }
 
@@ -109,7 +172,7 @@
   margin-top: 15px;
   margin-bottom: 30px;
   border-radius: 50%;
-  border: 5px solid @red-3;
+  border: 5px solid @primary-color;
   overflow: hidden;
   width: 200px;
   height: 200px;
@@ -218,4 +281,69 @@
 
 .ant-drawer-body {
   padding: 0;
+}
+
+.myGrid {
+  padding: 20px;
+}
+
+.ant-layout-content {
+  .myGrid {
+    padding: 20px;
+    border: none;
+    box-shadow: none;
+    width: 95%;
+    margin: auto;
+    margin-top: 25px;
+    background: @component-background;
+  }
+  .ant-divider.ant-divider-with-text {
+    color: @primary-color;
+    font-size: 35px;
+  }
+}
+
+.ant-typography {
+  font-size: 15px;
+}
+
+.ant-skeleton {
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+}
+
+.ant-col {
+  padding: 10px;
+}
+
+.ant-typography.inner_page_title {
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  font-size: 60px;
+  text-transform: uppercase;
+}
+
+.highlight {
+  color: @primary-color;
+}
+
+.highlight-light {
+  color: @primary-3;
+}
+
+.highlight-dark {
+  color: @primary-8;
+}
+
+.list-highlight {
+  color: @text-color-secondary;
+}
+
+.ant-btn.cv{
+  height: 45px;
+  padding: 3px 40px;
+  border-radius: 10px;
+  margin-top: 5px;
 }
