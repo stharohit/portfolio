@@ -1,22 +1,17 @@
-import React from 'react'
-import Grid from 'antd/lib/card/Grid'
-import { Divider, Row, Col } from 'antd'
+import React from "react";
+import Grid from "antd/lib/card/Grid";
+import { Row, Col } from "antd";
 
-interface Props {
-    
-}
+interface Props {}
 
 const MyServices = (props: Props) => {
-    return (
-        <Grid className='myGrid'>
-            
-            <Row>
-                <Col>
-                    
-                </Col>
-            </Row>
-        </Grid>
-    )
-}
+  return (
+    <Grid className="myGrid">
+      <Row>
+        <Col></Col>
+      </Row>
+    </Grid>
+  );
+};
 
-export default MyServices
+export default MyServices;

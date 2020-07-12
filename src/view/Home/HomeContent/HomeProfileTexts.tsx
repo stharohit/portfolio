@@ -11,7 +11,7 @@ const HomeProfileTexts = (props: Props) => {
         Hi, I'm <span className="highlight-light">Rohit Man Shrestha</span>
       </Title>
       <Text className="home-text content">
-        I am a Front End Web Developer and Designer.
+        I am a Full Stack Web Developer.
       </Text>
     </React.Fragment>
   );

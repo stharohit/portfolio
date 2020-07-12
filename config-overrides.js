@@ -54,30 +54,31 @@ module.exports = override(
       cache: true,
     })
   ),
-  addWebpackPlugin(
-    new ProgressPlugin({
-      handler: (percentage, msg) => {
-        let print = "";
+  process.env.NODE_ENV === "development" &&
+    addWebpackPlugin(
+      new ProgressPlugin({
+        handler: (percentage, msg) => {
+          let print = "";
 
-        for (let i = 0; i < 100; i++) {
-          if (i <= Math.round(percentage * 100)) {
-            print = print + "=";
-          } else {
-            print = print + "_";
+          for (let i = 0; i < 100; i++) {
+            if (i <= Math.round(percentage * 100)) {
+              print = print + "=";
+            } else {
+              print = print + "_";
+            }
           }
-        }
-        console.clear();
-        console.log(msg + "\n");
-        console.log(
-          "[ " +
-            print +
-            " ] \n => Completion percentage: " +
-            (percentage * 100).toFixed(2) +
-            "%"
-        );
-      },
-    })
-  ),
+          console.clear();
+          console.log(msg + "\n");
+          console.log(
+            "[ " +
+              print +
+              " ] \n => Completion percentage: " +
+              (percentage * 100).toFixed(2) +
+              "%"
+          );
+        },
+      })
+    ),
   addWebpackPlugin(
     new TerserPlugin({
       terserOptions: {
@@ -108,9 +109,7 @@ module.exports = override(
       modifyVars: lightVars,
       javascriptEnabled: true,
       sourceMap: true,
-      plugins: [
-        new LessPluginCleanCSS({ advanced: true }),
-      ],
+      plugins: [new LessPluginCleanCSS({ advanced: true })],
     },
   }),
   setWebpackOptimizationSplitChunks({
