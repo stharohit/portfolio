@@ -20,8 +20,11 @@ const MyContent = (props: Props) => {
         {switchDrawer && (
           <Header className="custom-header">
             <Text>Rohit Man Shrestha</Text>
-            <Button onClick={() => setDrawerVisible(!drawerVisible)}>
-              <MenuOutlined />
+            <Button
+              type="link"
+              onClick={() => setDrawerVisible(!drawerVisible)}
+            >
+              <MenuOutlined style={{ fontSize: "20px" }} />
             </Button>
           </Header>
         )}

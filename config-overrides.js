@@ -127,7 +127,18 @@ module.exports = override(
     },
   }),
   addWebpackModuleRule({
-    test: /\.(png|svg|jpg|gif|pdf)$/,
+    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+    issuer: {
+      test: /\.jsx?$/,
+    },
+    use: ["babel-loader", "@svgr/webpack", "url-loader"],
+  }),
+  addWebpackModuleRule({
+    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+    loader: "url-loader",
+  }),
+  addWebpackModuleRule({
+    test: /\.(png|jpg|gif|pdf)$/,
     use: [
       {
         loader: "file-loader",

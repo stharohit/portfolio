@@ -3,16 +3,13 @@ import { Typography } from "antd";
 interface Props {}
 
 const HomeProfileTexts = (props: Props) => {
-  const { Title, Text } = Typography;
+  const { Title } = Typography;
 
   return (
     <React.Fragment>
       <Title className="home-text title">
-        Hi, I'm <span className="highlight-light">Rohit Man Shrestha</span>
+        Hi, I am a <span className="highlight-light">Full Stack Web Developer.</span>
       </Title>
-      <Text className="home-text content">
-        I am a Full Stack Web Developer.
-      </Text>
     </React.Fragment>
   );
 };

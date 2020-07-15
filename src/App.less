@@ -72,13 +72,40 @@ h6 {
   scrollbar-width: thin;
 }
 
+// ant button
+button.ant-btn {
+  &.ant-btn-primary {
+    background-color: @primary-color;
+    background: @primary-color;
+    height: 45px;
+    padding: 0 25px;
+    border-radius: 6px;
+    border: @primary-color;
+
+    &:hover {
+      background-color: @primary-8;
+      background: @primary-8;
+      color: #fff;
+    }
+  }
+}
+
 .ant-layout {
   height: 100vh;
   max-height: 100vh;
 }
 
+.ant-layout-header {
+  padding: 0 30px;
+}
+
 .ant-drawer-body {
   overflow: visible;
+}
+
+.ant-drawer-close {
+  position: relative;
+  float: right;
 }
 
 .ant-layout-sider {
@@ -269,10 +296,6 @@ h6 {
   font-size: 35px;
 }
 
-.ant-btn {
-  color: @primary-color;
-}
-
 .ant-btn:hover,
 .ant-btn:focus {
   color: @primary-color;
@@ -283,10 +306,6 @@ h6 {
   padding: 0;
 }
 
-.myGrid {
-  padding: 20px;
-}
-
 .ant-layout-content {
   .myGrid {
     padding: 20px;
@@ -295,6 +314,7 @@ h6 {
     width: 95%;
     margin: auto;
     margin-top: 25px;
+    margin-bottom: 25px;
     background: @component-background;
   }
   .ant-divider.ant-divider-with-text {
@@ -313,15 +333,11 @@ h6 {
   width: 100%;
 }
 
-.ant-col {
-  padding: 10px;
-}
-
 .ant-typography.inner_page_title {
   text-align: center;
   margin-top: 25px;
   margin-bottom: 25px;
-  font-size: 60px;
+  font-size: 45px;
   text-transform: uppercase;
 }
 
@@ -353,4 +369,79 @@ h6 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  .ant-btn {
+    border: none;
+    color: @primary-color;
+    &:hover {
+      border: none;
+      background: none;
+      color: @primary-color;
+    }
+  }
+}
+
+.myServices .ant-col {
+  text-align: center;
+  margin-bottom: 15px;
+
+  .anticon {
+    margin-bottom: 10px;
+    font-size: 50px;
+    color: @primary-4;
+  }
+}
+
+// Biography
+.biography-timeline {
+  .timeline-time {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .timeline-content {
+    .ant-typography {
+      &.job {
+        color: @primary-color;
+      }
+      &.company {
+        margin: 0;
+        margin-bottom: 15px;
+      }
+      &.content {
+        display: block;
+      }
+    }
+  }
+}
+
+// Contact form
+.myForm {
+  input.ant-input {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+
+  TextArea.ant-input {
+    resize: none;
+    height: 120px;
+  }
+}
+
+// Projects
+.projects {
+  .ant-col {
+    text-align: center;
+  }
+
+  img {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  h4.ant-typography {
+    transition: 0.3s;
+    &:hover {
+      color: @primary-color;
+    }
+  }
 }

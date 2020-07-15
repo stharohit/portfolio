@@ -6,6 +6,7 @@
     "@ant-design/icons": "^4.2.1",
     "@hot-loader/react-dom": "^16.13.0",
     "@react-pdf/renderer": "^2.0.0-beta.6",
+    "@svgr/webpack": "^5.4.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -35,7 +36,8 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "terser-webpack-plugin": "^3.0.6",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "url-loader": "^4.1.0"
   },
   "scripts": {
     "start": "react-app-rewired start",
