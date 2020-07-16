@@ -35,7 +35,7 @@ const Projects = () => {
                 md={{ span: 11 }}
                 lg={{ span: 7 }}
               >
-                <a href={project.link} target="_blank">
+                <a href={project.link} target="_blank" rel="noopener noreferrer">
                   <img src={project.img} alt="Manakamana Agritech" />
                   <Title level={4}>{project.title}</Title>
                 </a>

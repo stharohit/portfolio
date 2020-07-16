@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
 
 const MyForm = () => {
+
+  const [formField, setFormField] = useState();
   const [form] = Form.useForm();
   const formItemLayout = {
     labelCol: { span: 24 },
     wrapperCol: { span: 20 },
   };
+  const submitMessage = () => {
+    console.log(form.getFieldsValue());
+  };
+
   return (
     <Form {...formItemLayout} className="myForm">
       <Form.Item labelAlign="left" label="Your Name" required>
@@ -22,7 +28,9 @@ const MyForm = () => {
         <Input.TextArea placeholder="Enter your message" />
       </Form.Item>
       <Form.Item>
-        <Button type="primary">Submit Message</Button>
+        <Button type="primary" onClick={submitMessage}>
+          Submit Message
+        </Button>
       </Form.Item>
     </Form>
   );
