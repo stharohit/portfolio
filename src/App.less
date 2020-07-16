@@ -99,8 +99,16 @@ button.ant-btn {
   padding: 0 30px;
 }
 
-.ant-drawer-body {
-  overflow: visible;
+.ant-drawer-wrapper-body {
+  background-color: @component-background;
+
+  .ant-drawer-body {
+    overflow: visible;
+  }
+
+  .ant-drawer-header-no-title {
+    background-color: inherit;
+  }
 }
 
 .ant-drawer-close {
