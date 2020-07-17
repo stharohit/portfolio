@@ -28,6 +28,7 @@ const MyForm = () => {
 
   const submitMessage = async () => {
     const err = await form.getFieldsError();
+    
     if (err.length === 0) {
       return err;
     }
