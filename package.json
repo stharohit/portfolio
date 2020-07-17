@@ -42,7 +42,7 @@
   },
   "scripts": {
     "start": "REACT_APP_MODE=development react-app-rewired start",
-    "build": "REACT_APP_MODE=production react-app-rewired build",
+    "build": "REACT_APP_MODE=production react-app-rewired build --profile",
     "build:analyze": "REACT_APP_MODE=analyze react-app-rewired build -p",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
