@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Form, Input, Button } from "antd";
-import connection from "utils/mailjet";
+import sendEmail from "utils/mailjet";
 
 interface FormFields {
   name: string;
@@ -10,7 +10,7 @@ interface FormFields {
 }
 
 const MyForm = () => {
-  const [formField, setFormField] = useState<FormFields>({
+  const [formFields, setFormFields] = useState<FormFields>({
     name: "",
     email: "",
     subject: "",
@@ -23,48 +23,21 @@ const MyForm = () => {
   };
 
   const handleInput = (inputName: string, val: string) => {
-    setFormField((prevField) => ({ ...prevField, [inputName]: val }));
+    setFormFields((prevField) => ({ ...prevField, [inputName]: val }));
   };
 
   const submitMessage = async () => {
     const err = await form.getFieldsError();
-    const validation = await form.validateFields();
     if (err.length === 0) {
-      console.log(err);
-      console.log(formField);
-      console.log(validation);
-
       return err;
     }
     console.log("working on sending email");
-
-    connection
-      .post("send", { version: "v3.1" })
-      .request({
-        Messages: [
-          {
-            From: {
-              Email: formField.email,
-              Name: formField.name,
-            },
-            To: [
-              {
-                Email: "stha.rht028@gmail.com",
-                Name: "Rohit Man Shrestha",
-              },
-            ],
-            Subject: formField.subject,
-            TextPart: formField.message,
-            HTMLPart: `${formField.message}`,
-          },
-        ],
-      })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    sendEmail(
+      formFields.name,
+      formFields.email,
+      formFields.subject,
+      formFields.message
+    );
   };
 
   return (
