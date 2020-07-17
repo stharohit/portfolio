@@ -115,6 +115,11 @@ module.exports = override(
           chunks: "all",
           priority: 1,
         },
+        common: {
+          test: /[\\/]src[\\/]/,
+          chunks: "all",
+          minSize: 0,
+        },
       },
     }),
   mode === "analyze" && addWebpackPlugin(new BundleAnalyzer()),
