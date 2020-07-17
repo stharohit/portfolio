@@ -9,12 +9,12 @@ const {
   addWebpackAlias,
   addWebpackModuleRule,
 } = require("customize-cra");
+const BundleAnalyzer = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
 const CompressionPlugin = require("compression-webpack-plugin");
 const { getLessVars } = require("antd-theme-generator");
 const TerserPlugin = require("terser-webpack-plugin");
 var ProgressPlugin = require("webpack/lib/ProgressPlugin");
-const LessPluginCleanCSS = require("less-plugin-clean-css");
 const darkVars = {
   ...getLessVars("./node_modules/antd/lib/style/themes/dark.less"),
 };
@@ -23,7 +23,7 @@ const lightVars = {
 };
 fs.writeFileSync("./src/dark.json", JSON.stringify(darkVars));
 fs.writeFileSync("./src/light.json", JSON.stringify(lightVars));
-
+console.log(mode);
 const options = {
   stylesDir: path.join(__dirname, "./src"),
   antDir: path.join(__dirname, "./node_modules/antd"),
@@ -46,15 +46,17 @@ module.exports = override(
   addWebpackPlugin(new AntDesignThemePlugin(options)),
   addWebpackPlugin(
     new CompressionPlugin({
-      filename: "[path].gz[query]",
-      algorithm: "gzip",
-      test: /\.js$|\.css$|\.jpg$|\.less$/,
+      filename: "[path].br[query]",
+      algorithm: "brotliCompress",
+      test: /\.(js|css|html|svg|jpg|png|less|woff|woff2|json)$/,
+      compressionOptions: {
+        level: 11,
+      },
       threshold: 10240,
       minRatio: 0.8,
-      cache: true,
     })
   ),
-  process.env.NODE_ENV === "development" &&
+  mode === "development" &&
     addWebpackPlugin(
       new ProgressPlugin({
         handler: (percentage, msg) => {
@@ -104,26 +106,21 @@ module.exports = override(
       parallel: true,
     })
   ),
+  mode === "production" && setWebpackOptimizationSplitChunks({
+    cacheGroups: {
+      node_vendors: {
+        test: /[\\/]node_modules[\\/]/,
+        chunks: "all",
+        priority: 1,
+      },
+    },
+  }),
+  mode === "analyze" && addWebpackPlugin(new BundleAnalyzer()),
   addLessLoader({
     lessOptions: {
       modifyVars: lightVars,
       javascriptEnabled: true,
       sourceMap: true,
-      plugins: [new LessPluginCleanCSS({ advanced: true })],
-    },
-  }),
-  setWebpackOptimizationSplitChunks({
-    cacheGroups: {
-      vendor: {
-        name: "customBundle",
-        test: /[\\/]node_modules[\\/]/,
-        chunks: "all",
-      },
-      common: {
-        test: /[\\/]src[\\/]components[\\/]/,
-        chunks: "all",
-        minSize: 0,
-      },
     },
   }),
   addWebpackModuleRule({
@@ -138,19 +135,33 @@ module.exports = override(
     loader: "url-loader",
   }),
   addWebpackModuleRule({
-    test: /\.(png|jpg|gif|pdf)$/,
+    test: /\.(png|jpg|gif|jpeg)$/,
     use: [
       {
         loader: "file-loader",
         options: {
           name: "[name].[ext]",
+          outputPath: "static/images",
         },
       },
     ],
   }),
-  addWebpackAlias({
-    "react-dom": "@hot-loader/react-dom",
+  addWebpackModuleRule({
+    test: /\.(pdf)$/,
+    use: [
+      {
+        loader: "file-loader",
+        options: {
+          name: "[name].[ext]",
+          outputPath: "static/files",
+        },
+      },
+    ],
   }),
+  mode === "development" &&
+    addWebpackAlias({
+      "react-dom": "@hot-loader/react-dom",
+    }),
   (config, env) => {
     config = rewireReactHotLoader(config, env);
     return config;
