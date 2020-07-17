@@ -118,7 +118,6 @@ module.exports = override(
           test: /[\\/]src[\\/]components[\\/]/,
           chunks: "all",
           minSize: 0,
-          minChunk: 2,
         },
       },
     }),
