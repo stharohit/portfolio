@@ -4,7 +4,8 @@ declare namespace NodeJS {
   interface ProcessEnv {
     NODE_ENV: "development" | "production";
     PUBLIC_URL: string;
-    REACT_APP_BUNDLE_VISUALIZE: number;
+    REACT_APP_SMPT_API_KEY: Enums;
+    REACT_APP_SMPT_SECRET_KEY: Enums;
   }
 }
 interface Window {

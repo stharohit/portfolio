@@ -115,10 +115,11 @@ module.exports = override(
           chunks: "all",
           priority: 1,
         },
-        common: {
-          test: /[\\/]src[\\/]/,
+        commons: {
+          test: /[\\/]src[\\/]components[\\/]/,
           chunks: "all",
           minSize: 0,
+          minChunk: 2,
         },
       },
     }),
