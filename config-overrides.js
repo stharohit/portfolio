@@ -57,31 +57,30 @@ module.exports = override(
       minRatio: 0.8,
     })
   ),
-  mode === "development" &&
-    addWebpackPlugin(
-      new ProgressPlugin({
-        handler: (percentage, msg) => {
-          let print = "";
+  addWebpackPlugin(
+    new ProgressPlugin({
+      handler: (percentage, msg) => {
+        let print = "";
 
-          for (let i = 0; i < 100; i++) {
-            if (i <= Math.round(percentage * 100)) {
-              print = print + "=";
-            } else {
-              print = print + "_";
-            }
+        for (let i = 0; i < 100; i++) {
+          if (i <= Math.round(percentage * 100)) {
+            print = print + "=";
+          } else {
+            print = print + "_";
           }
-          console.clear();
-          console.log(msg + "\n");
-          console.log(
-            "[ " +
-              print +
-              " ] \n => Completion percentage: " +
-              (percentage * 100).toFixed(2) +
-              "%"
-          );
-        },
-      })
-    ),
+        }
+        console.clear();
+        console.log(msg + "\n");
+        console.log(
+          "[ " +
+            print +
+            " ] \n => Completion percentage: " +
+            (percentage * 100).toFixed(2) +
+            "%"
+        );
+      },
+    })
+  ),
   addWebpackPlugin(
     new TerserPlugin({
       terserOptions: {
