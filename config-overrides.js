@@ -24,11 +24,11 @@ const lightVars = {
 fs.writeFileSync("./src/dark.json", JSON.stringify(darkVars));
 fs.writeFileSync("./src/light.json", JSON.stringify(lightVars));
 const mode = process.env.REACT_APP_MODE;
-console.log(mode);
 const options = {
   stylesDir: path.join(__dirname, "./src"),
   antDir: path.join(__dirname, "./node_modules/antd"),
   varFile: path.join(__dirname, "./src/App.less"),
+  lessUrl: "./less.min.js",
   themeVariables: Array.from(
     new Set([...Object.keys(darkVars), ...Object.keys(lightVars)])
   ),
