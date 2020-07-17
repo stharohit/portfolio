@@ -23,6 +23,7 @@ const lightVars = {
 };
 fs.writeFileSync("./src/dark.json", JSON.stringify(darkVars));
 fs.writeFileSync("./src/light.json", JSON.stringify(lightVars));
+const mode = process.env.REACT_APP_MODE;
 console.log(mode);
 const options = {
   stylesDir: path.join(__dirname, "./src"),
@@ -106,15 +107,16 @@ module.exports = override(
       parallel: true,
     })
   ),
-  mode === "production" && setWebpackOptimizationSplitChunks({
-    cacheGroups: {
-      node_vendors: {
-        test: /[\\/]node_modules[\\/]/,
-        chunks: "all",
-        priority: 1,
+  mode === "production" &&
+    setWebpackOptimizationSplitChunks({
+      cacheGroups: {
+        node_vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          chunks: "all",
+          priority: 1,
+        },
       },
-    },
-  }),
+    }),
   mode === "analyze" && addWebpackPlugin(new BundleAnalyzer()),
   addLessLoader({
     lessOptions: {
