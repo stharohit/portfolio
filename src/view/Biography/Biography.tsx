@@ -1,10 +1,10 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import MyLayout from "components/Layout/MyLayout";
 import Grid from "antd/lib/card/Grid";
-import { Typography } from "antd";
+import { Typography, Skeleton } from "antd";
 import { ReactComponent as Work } from "assets/img/work.svg";
 import { ReactComponent as Education } from "assets/img/education.svg";
-import BioTimeline from "./BioTimeline";
+const BioTimeline = lazy(() => import("./BioTimeline"));
 
 interface Props {}
 
@@ -66,16 +66,20 @@ const Biography = (props: Props) => {
           My <span className="highlight">Biography</span>
         </Title>
         <div className="biography-timeline">
-          <BioTimeline
-            mainTitle="Work Experience"
-            Work={Work}
-            arryWork={work}
-          />
-          <BioTimeline
-            mainTitle="Educational Qualifications"
-            Work={Education}
-            arryWork={education}
-          />
+          <Suspense fallback={<Skeleton />}>
+            <BioTimeline
+              mainTitle="Work Experience"
+              Work={Work}
+              arryWork={work}
+            />
+          </Suspense>
+          <Suspense fallback={<Skeleton />}>
+            <BioTimeline
+              mainTitle="Educational Qualifications"
+              Work={Education}
+              arryWork={education}
+            />
+          </Suspense>
         </div>
       </Grid>
     </MyLayout>

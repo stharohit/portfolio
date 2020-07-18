@@ -1,9 +1,9 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import Grid from "antd/lib/card/Grid";
 import MyLayout from "components/Layout/MyLayout";
-import { Typography, Row, Col } from "antd";
-import MyForm from "./MyForm";
-import ContactImage from "./ContactImage";
+import { Typography, Row, Col, Skeleton } from "antd";
+const MyForm = lazy(() => import("./MyForm"));
+const ContactImage = lazy(() => import("./ContactImage"));
 
 interface Props {}
 
@@ -23,7 +23,9 @@ const GetInTouch = (props: Props) => {
             lg={{ span: 11, offset: 1 }}
             xl={{ span: 11, offset: 1 }}
           >
-            <ContactImage />
+            <Suspense fallback={<Skeleton.Image />}>
+              <ContactImage />
+            </Suspense>
           </Col>
           <Col
             xs={24}
@@ -32,7 +34,9 @@ const GetInTouch = (props: Props) => {
             lg={{ span: 10, offset: 1 }}
             xl={{ span: 10, offset: 1 }}
           >
-            <MyForm />
+            <Suspense fallback={<Skeleton />}>
+              <MyForm />
+            </Suspense>
           </Col>
         </Row>
       </Grid>

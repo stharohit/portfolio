@@ -1,9 +1,10 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import MyLayout from "components/Layout/MyLayout";
 import Grid from "antd/lib/card/Grid";
-import { Typography, Row, Col } from "antd";
+import { Typography, Row, Col, Skeleton } from "antd";
 import manakamana from "assets/img/portfolio/manakamana.jpg";
 import tm from "assets/img/portfolio/trekking_mart.jpg";
+const ProjectsImage = lazy(() => import("./ProjectsItem/ProjectsImage"));
 
 const Projects = () => {
   const { Title } = Typography;
@@ -35,8 +36,14 @@ const Projects = () => {
                 md={{ span: 11 }}
                 lg={{ span: 7 }}
               >
-                <a href={project.link} target="_blank" rel="noopener noreferrer">
-                  <img src={project.img} alt="Manakamana Agritech" />
+                <a
+                  href={project.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Suspense fallback={<Skeleton.Image />}>
+                    <ProjectsImage image={project.img} />
+                  </Suspense>
                   <Title level={4}>{project.title}</Title>
                 </a>
               </Col>
