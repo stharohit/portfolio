@@ -15,6 +15,8 @@ const CompressionPlugin = require("compression-webpack-plugin");
 const { getLessVars } = require("antd-theme-generator");
 const TerserPlugin = require("terser-webpack-plugin");
 var ProgressPlugin = require("webpack/lib/ProgressPlugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const extractLESS = new ExtractTextPlugin("static/css/[name]-two.css");
 const darkVars = {
   ...getLessVars("./node_modules/antd/lib/style/themes/dark.less"),
 };
@@ -122,12 +124,30 @@ module.exports = override(
       },
     }),
   mode === "analyze" && addWebpackPlugin(new BundleAnalyzer()),
-  addLessLoader({
-    lessOptions: {
-      modifyVars: lightVars,
-      javascriptEnabled: true,
-      sourceMap: true,
-    },
+  addWebpackPlugin(
+    new ExtractTextPlugin({
+      filename: "static/css/[name].css",
+      allChunks: true,
+      disable: false,
+    })
+  ),
+  addWebpackModuleRule({
+    test: /\.less$/i,
+    use: ExtractTextPlugin.extract({
+      use: [
+        "css-loader",
+        {
+          loader: "less-loader",
+          options: {
+            lessOptions: {
+              modifyVars: lightVars,
+              javascriptEnabled: true,
+              sourceMap: true,
+            },
+          },
+        },
+      ],
+    }),
   }),
   addWebpackModuleRule({
     test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
@@ -136,6 +156,7 @@ module.exports = override(
     },
     use: ["babel-loader", "@svgr/webpack", "url-loader"],
   }),
+
   addWebpackModuleRule({
     test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
     loader: "url-loader",
