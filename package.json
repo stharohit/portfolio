@@ -4,6 +4,9 @@
   "private": true,
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
+    "@babel/preset-env": "^7.10.4",
+    "@babel/preset-react": "^7.10.4",
+    "@babel/register": "^7.10.5",
     "@hot-loader/react-dom": "^16.13.0",
     "@react-pdf/renderer": "^2.0.0-beta.6",
     "@svgr/webpack": "^5.4.0",
@@ -23,9 +26,11 @@
     "compression-webpack-plugin": "^4.0.0",
     "css-loader": "^3.6.0",
     "customize-cra": "^1.0.0",
+    "express": "^4.17.1",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^6.0.0",
     "gh-pages": "^3.1.0",
+    "ignore-styles": "^5.0.1",
     "less": "^3.11.3",
     "less-loader": "^6.1.3",
     "less-plugin-clean-css": "^1.5.1",
@@ -45,7 +50,7 @@
   },
   "scripts": {
     "start": "REACT_APP_MODE=development react-app-rewired start",
-    "build": "REACT_APP_MODE=production react-app-rewired build --profile",
+    "build": "REACT_APP_MODE=production react-app-rewired build",
     "build:analyze": "REACT_APP_MODE=analyze react-app-rewired build -p",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"

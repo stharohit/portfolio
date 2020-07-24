@@ -3,7 +3,6 @@ const fs = require("fs");
 const {
   override,
   fixBabelImports,
-  addLessLoader,
   addWebpackPlugin,
   setWebpackOptimizationSplitChunks,
   addWebpackAlias,
@@ -16,7 +15,6 @@ const { getLessVars } = require("antd-theme-generator");
 const TerserPlugin = require("terser-webpack-plugin");
 var ProgressPlugin = require("webpack/lib/ProgressPlugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const extractLESS = new ExtractTextPlugin("static/css/[name]-two.css");
 const darkVars = {
   ...getLessVars("./node_modules/antd/lib/style/themes/dark.less"),
 };
@@ -117,7 +115,7 @@ module.exports = override(
           priority: 1,
         },
         commons: {
-          test: /[\\/]src[\\/]components[\\/]/,
+          test: /[\\/]src[\\/]/,
           chunks: "all",
           minSize: 0,
         },
