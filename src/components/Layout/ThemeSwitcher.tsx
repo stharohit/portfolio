@@ -4,6 +4,7 @@ import lightVars from "light.json";
 import { Switch } from "antd";
 import { IoMdSunny, IoMdMoon } from "react-icons/io";
 import { themeChanger } from "utils/themeConfig";
+import ReactGa from "react-ga";
 
 interface Props {}
 
@@ -23,6 +24,10 @@ const ThemeSwitcher = (props: Props) => {
   }, [themeMode]);
 
   const handleTheme = () => {
+    ReactGa.event({
+      category: "Button",
+      action: "Theme Changer button clicked",
+    });
     if (themeMode === "dark") {
       let changedTheme = themeChanger(lightVars);
       if (changedTheme) {
