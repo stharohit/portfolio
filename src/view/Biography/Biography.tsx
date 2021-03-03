@@ -12,8 +12,8 @@ const Biography = (props: Props) => {
   const { Title } = Typography;
   const work = [
     {
-      time: "Jan 2019 – Present",
-      from: "Tech Durbar",
+      time: "2019 FEB - 2020 JUN",
+      from: "Full Stack Developer",
       position: "React/Wordpress developer",
       content: [
         "Build Progressive Web application that is user interactive using Reactjs, Typescript and Es6.",
@@ -23,9 +23,9 @@ const Biography = (props: Props) => {
       ],
     },
     {
-      time: "Sep 2017 – Dec 2019",
-      from: "8848 Business Solutions",
-      position: "Wordpress developer",
+      time: "2017 JUL – 2019 DEC",
+      from: "ABGS Group",
+      position: "Full Stack Developer",
       content: [
         "Designing webpage mockup using Adobe Photoshop and implementing those layouts to a webpage.",
         "Designing webpage layout using html5, css3 along with jQuery and adding dynamic functionality.",
