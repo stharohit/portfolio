@@ -8,7 +8,7 @@ Rohit Man Shrestha's portfolio should feel like a calm, high-signal engineering 
 
 - **Name:** Rohit Man Shrestha
 - **Role:** Senior Software Developer
-- **Promise:** Dependable web products, clearly delivered.
+- **Promise:** Useful software, fewer riddles.
 - **Voice:** Confident, precise, understated, human.
 - **Primary action:** Let's work together.
 - **Secondary action:** Download portfolio.

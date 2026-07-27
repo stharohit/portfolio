@@ -1,6 +1,6 @@
 # Rohit Man Shrestha — Portfolio
 
-Personal portfolio for Rohit Man Shrestha, a Senior Software Developer focused on dependable web products, practical modernization, and useful AI workflows.
+Personal portfolio for Rohit Man Shrestha, a Senior Software Developer who turns tangled problems into useful software—across products, platforms, and internal tools.
 
 ## Purpose
 
@@ -8,7 +8,7 @@ This site is a clear place for potential clients and collaborators to understand
 
 ## What I help with
 
-- Full-stack web applications and websites
+- Full-stack products, platforms, and web applications
 - Existing product repair and modernization
 - System architecture, APIs, and integrations
 - Practical AI-assisted workflows

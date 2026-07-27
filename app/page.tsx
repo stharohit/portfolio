@@ -46,7 +46,7 @@ const projects = [
 const services = [
   [
     "Product development",
-    "End-to-end web apps with clean architecture, reliable APIs, and a delivery rhythm your team can follow.",
+    "End-to-end products, platforms, and web apps with clean architecture, dependable APIs, and a delivery rhythm your team can follow.",
   ],
   [
     "System repair",
@@ -85,8 +85,8 @@ const notes = [
   },
   {
     date: "Working note 02",
-    title: "A good build stays understandable after launch.",
-    text: "Architecture, naming, and release practices should help the next person move with confidence.",
+    title: "Good software stays legible after launch.",
+    text: "Architecture, naming, and release practices should make change less of a treasure hunt.",
   },
 ];
 
@@ -246,12 +246,12 @@ export default function Home() {
           <div className="content hero-content">
             <p className="eyebrow"><span /> Available for select projects</p>
             <h1 id="hero-title">
-              <span>I build</span>
-              <em>dependable</em>
-              <span>web products.</span>
+              <span>I turn tangled</span>
+              <em>problems into</em>
+              <span>useful software.</span>
             </h1>
             <p className="hero-copy">
-              Full stack web development for teams building from scratch or making an existing product easier to trust, use, and grow.
+              I build products, platforms, and internal tools from scratch—and give existing software a clearer path forward.
             </p>
             <div className="hero-actions">
               <Link className="button button--primary" href="#contact">
@@ -262,7 +262,7 @@ export default function Home() {
               </a>
             </div>
             <dl className="hero-facts">
-              <div><dt>Focus</dt><dd>Web apps & websites</dd></div>
+              <div><dt>Focus</dt><dd>Products, platforms & tools</dd></div>
               <div><dt>Stack</dt><dd>Next.js · Node.js · TypeScript</dd></div>
             </dl>
           </div>
@@ -273,9 +273,9 @@ export default function Home() {
             <div className="section-heading">
               <div>
                 <p className="eyebrow">02 / Selected work</p>
-                <h2 id="work-title">Ideas, engineered.<br /><em>Impact, delivered.</em></h2>
+                <h2 id="work-title">Problems, untangled.<br /><em>Systems, shipped.</em></h2>
               </div>
-              <p>Three focused examples of the kind of systems I help teams shape, repair, and move forward.</p>
+              <p>Three examples of the systems I help teams shape, repair, and put to work.</p>
             </div>
             <div className="project-grid">
               {projects.map((project) => (
@@ -307,7 +307,7 @@ export default function Home() {
             <div className="services-intro">
               <p className="eyebrow">03 / Services</p>
               <h2 id="services-title">From concept to <em>reliable software.</em></h2>
-              <p>I take responsibility for the work between a clear idea and a useful, maintainable result.</p>
+              <p>I take responsibility for the work between a rough idea and software that earns its place.</p>
             </div>
             <ol className="service-list">
               {services.map(([title, description], index) => (
@@ -326,7 +326,7 @@ export default function Home() {
               <p className="eyebrow">04 / Modern stack</p>
               <h2 id="stack-title">Modern tools. <em>Thoughtful choices.</em></h2>
               <p>
-                A focused toolkit for building quickly without leaving the next person with a fragile system.
+                A focused toolkit for moving quickly without leaving a future teammate a mystery novel.
               </p>
             </div>
             <ul className="technology-grid" aria-label="Technology stack">
@@ -362,11 +362,11 @@ export default function Home() {
           <div className="content statement-layout">
             <div>
               <p className="eyebrow">06 / About</p>
-              <h2 id="about-title">Engineering should make the next decision <em>easier.</em></h2>
+              <h2 id="about-title">Good engineering leaves <em>fewer riddles.</em></h2>
             </div>
             <div className="statement-copy">
-              <p>I work with teams that need thoughtful execution without the drama: a clear plan, steady communication, and code that holds up after launch.</p>
-              <p>My work sits where product judgment meets full stack delivery: interfaces people can use, systems teams can maintain, and practical AI workflows when they earn their place.</p>
+              <p>I work with teams that want thoughtful execution without the drama: a clear plan, steady communication, and code that still makes sense after launch.</p>
+              <p>My work sits where product judgment meets software delivery: interfaces people can use, systems teams can maintain, and practical AI workflows when they earn their place.</p>
             </div>
           </div>
         </section>
@@ -392,7 +392,7 @@ export default function Home() {
             <div className="contact-copy">
               <p className="eyebrow">08 / Let&apos;s connect</p>
               <h2 id="contact-title">Let&apos;s build something <em>meaningful.</em></h2>
-              <p>Tell me what you&apos;re trying to improve or bring to life. I&apos;ll reply with a clear next step.</p>
+              <p>Tell me what you&apos;re trying to improve or bring to life. I&apos;ll reply with a useful next move.</p>
               <ul>
                 <li><a href="mailto:stha.rht028@gmail.com">stha.rht028@gmail.com</a></li>
                 <li><a href="https://www.linkedin.com/in/rohitshrestha" target="_blank" rel="noreferrer">LinkedIn</a></li>
