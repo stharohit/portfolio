@@ -33,3 +33,10 @@ html.light { --ink:#f7fbfc; --ink-raised:#eaf4f6; --paper:#fff; --paper-blue:#ea
 
 /* A restrained corner radius unifies bordered UI without changing the orbital language. */
 :where(.theme-toggle,.menu-toggle,.mobile-nav,.button,.project-card,.stack-list span,.technology-grid li,.principle-grid article,.note-grid article,.contact-form,.contact-form input,.contact-form textarea,.floating-contact) { border-radius:6px; }
+
+.principle-grid { gap:1rem; }
+.principle-grid article { display:grid; min-height:220px; align-content:center; justify-items:center; border:0; padding:1.25rem; text-align:center; }
+.principle-grid article:first-child { border-left:0; }
+.principle-icon { display:grid; width:3.1rem; height:3.1rem; place-items:center; margin-bottom:1.35rem; }
+.principle-icon svg { width:100%; height:100%; filter:drop-shadow(0 8px 14px rgba(2,7,12,.15)); }
+.principle-grid p { margin-bottom:.45rem; }

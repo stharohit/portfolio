@@ -90,6 +90,19 @@ const notes = [
   },
 ];
 
+function PrincipleIcon({ index }: { index: number }) {
+  if (index === 0) {
+    return <svg viewBox="0 0 64 64" fill="none"><path d="M32 7 52 15v15c0 13-8.2 22-20 27C20.2 52 12 43 12 30V15L32 7Z" fill="#2563EB" /><path d="m22 31 7 7 14-15" stroke="#A7F3D0" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+  }
+  if (index === 1) {
+    return <svg viewBox="0 0 64 64" fill="none"><path d="M7 32s9-16 25-16 25 16 25 16-9 16-25 16S7 32 7 32Z" fill="#F59E0B" /><circle cx="32" cy="32" r="9" fill="#0E7490" /><circle cx="32" cy="32" r="4" fill="#FDE68A" /></svg>;
+  }
+  if (index === 2) {
+    return <svg viewBox="0 0 64 64" fill="none"><path d="m12 23 20-11 20 11-20 11-20-11Z" fill="#F97316" /><path d="m12 32 20 11 20-11" stroke="#7C3AED" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" /><path d="m12 42 20 11 20-11" stroke="#38BDF8" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+  }
+  return <svg viewBox="0 0 64 64" fill="none"><path d="M10 13h27v20H23L14 42V33h-4V13Z" fill="#EC4899" /><path d="M54 27H27v18h14l9 9v-9h4V27Z" fill="#14B8A6" /><circle cx="23" cy="23" r="3" fill="white" /><circle cx="32" cy="23" r="3" fill="white" /><circle cx="41" cy="23" r="3" fill="white" /></svg>;
+}
+
 export default function Home() {
   const [isLight, setIsLight] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -299,7 +312,7 @@ export default function Home() {
             <div className="principle-grid">
               {principles.map((principle, index) => (
                 <article key={principle}>
-                  <span className="principle-orbit" aria-hidden="true"><i /><i /><i /></span>
+                  <span className="principle-icon" aria-hidden="true"><PrincipleIcon index={index} /></span>
                   <p>0{index + 1}</p>
                   <h3>{principle}</h3>
                   <span>{["Solid foundations before speed.", "Visible trade-offs, plain language.", "Built for the next change.", "Progress you can actually see."][index]}</span>
