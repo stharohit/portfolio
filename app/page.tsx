@@ -197,7 +197,11 @@ export default function Home() {
           <ol className="hero-rail" aria-hidden="true"><li>01</li><li /><li /><li /><li /><li>06</li></ol>
           <div className="content hero-content">
             <p className="eyebrow"><span /> Available for select projects</p>
-            <h1 id="hero-title">I build <em>dependable</em> web products.</h1>
+            <h1 id="hero-title">
+              <span>I build</span>
+              <em>dependable</em>
+              <span>web products.</span>
+            </h1>
             <p className="hero-copy">
               Full stack web development for teams building from scratch or making an existing product easier to trust, use, and grow.
             </p>
