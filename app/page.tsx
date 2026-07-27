@@ -338,8 +338,7 @@ export default function Home() {
             <h1 className="mx-auto max-w-6xl text-[clamp(3rem,5vw,5.5rem)] leading-[0.95] font-semibold tracking-tight text-white md:mx-0 dark:text-cyan-50">
               I craft web experiences with
               <span
-                className="mx-2 inline-block h-10 w-24 rounded-full bg-cover bg-center align-middle md:h-12 md:w-28"
-                style={{ backgroundImage: "url(https://picsum.photos/seed/glass-chip/360/180)" }}
+                className="mx-2 inline-block h-10 w-24 rounded-full bg-[radial-gradient(circle_at_20%_24%,rgba(165,243,252,0.95),transparent_15%),linear-gradient(115deg,#164e63,#0e7490_48%,#a5f3fc)] align-middle ring-1 ring-white/30 md:h-12 md:w-28"
                 aria-hidden="true"
               />
               modern engineering and practical delivery.
