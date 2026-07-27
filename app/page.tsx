@@ -207,23 +207,27 @@ export default function Home() {
       </header>
 
       <nav className={`mobile-nav ${isMenuOpen ? "mobile-nav--open" : ""}`} id="mobile-nav" aria-label="Mobile navigation">
-          {navigation.map((item) => (
-            <a key={item.href} href={item.href} onClick={closeMenu}>
-              {item.label}
-            </a>
-          ))}
-          <div className="mobile-menu-tools">
-            <span>Appearance</span>
-            <button
-              className="mobile-theme-toggle"
-              type="button"
-              aria-label={`Switch to ${isLight ? "dark" : "light"} mode`}
-              onClick={() => setIsLight((value) => !value)}
-            >
-              <ThemeGlyph isLight={isLight} />
-              {isLight ? "Dark mode" : "Light mode"}
-            </button>
-          </div>
+        <a className="mobile-nav-brand" href="#top" aria-label="Rohit Man Shrestha home" onClick={closeMenu}>
+          <Image src={isLight ? "/brand/rm-mark.svg" : "/brand/rm-mark-dark.svg"} alt="" width={38} height={38} />
+          <span>Rohit Man Shrestha<small>Senior Software Developer</small></span>
+        </a>
+        {navigation.map((item) => (
+          <a key={item.href} href={item.href} onClick={closeMenu}>
+            {item.label}
+          </a>
+        ))}
+        <div className="mobile-menu-tools">
+          <span>Appearance</span>
+          <button
+            className="mobile-theme-toggle"
+            type="button"
+            aria-label={`Switch to ${isLight ? "dark" : "light"} mode`}
+            onClick={() => setIsLight((value) => !value)}
+          >
+            <ThemeGlyph isLight={isLight} />
+            {isLight ? "Dark mode" : "Light mode"}
+          </button>
+        </div>
       </nav>
       <button className={`mobile-menu-backdrop ${isMenuOpen ? "mobile-menu-backdrop--open" : ""}`} type="button" aria-label="Close menu" onClick={closeMenu} />
 
