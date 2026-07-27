@@ -16,7 +16,6 @@ type NavItem = {
 type BentoCard = {
   title: string;
   description: string;
-  image: string;
   spans: string;
   tone: "left" | "right";
 };
@@ -25,14 +24,12 @@ type ServiceRole = {
   title: string;
   focus: string;
   stack: string;
-  image: string;
 };
 
 type Project = {
   title: string;
   blurb: string;
   focus: string;
-  image: string;
 };
 
 type Post = {
@@ -53,7 +50,6 @@ const bentoCards: BentoCard[] = [
     title: "Full Stack Product Development",
     description:
       "I ship end-to-end web apps with reliable architecture, clean API contracts, and maintainable deployment practices.",
-    image: "https://picsum.photos/seed/portfolio-architecture/1200/900",
     spans: "col-span-2 row-span-2",
     tone: "left",
   },
@@ -61,7 +57,6 @@ const bentoCards: BentoCard[] = [
     title: "Website Buildouts",
     description:
       "Landing pages, portfolio sites, and marketing platforms tuned for speed, clarity, and conversion.",
-    image: "https://picsum.photos/seed/portfolio-lights/1200/900",
     spans: "col-span-2 row-span-1",
     tone: "right",
   },
@@ -69,7 +64,6 @@ const bentoCards: BentoCard[] = [
     title: "AI-Assisted Workflows",
     description:
       "AI agent loops for research, drafts, QA checklists, and support automation where they reduce manual overhead.",
-    image: "https://picsum.photos/seed/portfolio-agents/1200/900",
     spans: "col-span-1 row-span-1",
     tone: "left",
   },
@@ -77,7 +71,6 @@ const bentoCards: BentoCard[] = [
     title: "Backend Modernization",
     description:
       "Refactoring existing systems with stable API layers, stronger data validation, and pragmatic observability.",
-    image: "https://picsum.photos/seed/portfolio-backend/1200/900",
     spans: "col-span-1 row-span-1",
     tone: "right",
   },
@@ -88,19 +81,16 @@ const serviceRoles: ServiceRole[] = [
     title: "Freelance Product Builder",
     focus: "Greenfield startup launches and MVP development",
     stack: "Next.js, TypeScript, Prisma",
-    image: "https://picsum.photos/seed/portfolio-accordion-one/900/500",
   },
   {
     title: "Legacy App Modernizer",
     focus: "Refactoring unstable features with fast, safe delivery",
     stack: "Node.js, React, PostgreSQL",
-    image: "https://picsum.photos/seed/portfolio-accordion-two/900/500",
   },
   {
     title: "Interface & Workflow Repair",
     focus: "Usability fixes and maintainability for existing teams",
     stack: "Node.js, TRPC, Tailwind",
-    image: "https://picsum.photos/seed/portfolio-accordion-three/900/500",
   },
 ];
 
@@ -110,21 +100,18 @@ const projects: Project[] = [
     blurb:
       "A rebuilt experience with clearer booking flow, resilient state handling, and cleaner information architecture.",
     focus: "Next.js, Node.js, API contracts",
-    image: "https://picsum.photos/seed/portfolio-project-one/1400/900",
   },
   {
     title: "Operations Dashboard Upgrade",
     blurb:
       "Dashboard flows were simplified for agents, with robust components that reduced context switching and delivery friction.",
     focus: "TypeScript, React, TDD",
-    image: "https://picsum.photos/seed/portfolio-project-two/1400/900",
   },
   {
     title: "Service Team Client Portal",
     blurb:
       "Role-aware flows and clear status patterns were introduced to improve coordination and reduce handoff errors.",
     focus: "Node.js, Next.js, MongoDB",
-    image: "https://picsum.photos/seed/portfolio-project-three/1400/900",
   },
 ];
 
@@ -159,7 +146,9 @@ const aboutWords =
 );
 
 export default function Home() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(
+    () => typeof window !== "undefined" && localStorage.getItem("portfolio-theme") === "dark"
+  );
   const [mail, setMail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
@@ -172,22 +161,15 @@ export default function Home() {
   const projectsTitleRef = useRef<HTMLDivElement>(null);
   const projectsGalleryRef = useRef<HTMLDivElement>(null);
   const stackRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const mediaRefs = useRef<(HTMLImageElement | null)[]>([]);
+  const mediaRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const setStackRef = (index: number) => (el: HTMLDivElement | null) => {
     stackRefs.current[index] = el;
   };
 
-  const setMediaRef = (index: number) => (el: HTMLImageElement | null) => {
+  const setMediaRef = (index: number) => (el: HTMLDivElement | null) => {
     mediaRefs.current[index] = el;
   };
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("portfolio-theme");
-    if (savedTheme === "dark") {
-      setIsDark(true);
-    }
-  }, []);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", isDark);
@@ -341,13 +323,9 @@ export default function Home() {
           className="section-shell relative overflow-hidden px-6 py-32 md:py-40"
         >
           <div className="pointer-events-none absolute inset-0 -z-10 opacity-80">
-            <img
-              src="https://picsum.photos/seed/portfolio-glass-hue/2400/1200"
-              alt=""
-              aria-hidden="true"
-              className="h-full w-full object-cover object-center grayscale mix-blend-luminosity"
-            />
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(8,145,178,0.35),transparent_38%),radial-gradient(circle_at_80%_0%,rgba(15,23,42,0.45),transparent_34%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(8,47,73,0.9),rgba(8,145,178,0.36)_44%,rgba(15,23,42,0.76)),repeating-linear-gradient(135deg,rgba(255,255,255,0.07)_0_1px,transparent_1px_22px)]" />
+            <div className="absolute -left-24 top-0 h-[34rem] w-[34rem] rounded-full border border-cyan-100/20 bg-cyan-300/15 blur-3xl" />
+            <div className="absolute bottom-[-16rem] right-[-10rem] h-[36rem] w-[36rem] rounded-full border border-white/10 bg-slate-950/30 blur-3xl" />
           </div>
 
           <div className="mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center gap-8 text-center md:text-left">
@@ -446,13 +424,8 @@ export default function Home() {
                   className={`glass-panel group relative overflow-hidden ${card.spans} rounded-3xl border border-white/35 p-5 ring-1 ring-white/30`}
                 >
                   <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
-                    <img
-                      src={card.image}
-                      alt=""
-                      aria-hidden="true"
-                      className="h-full w-full object-cover blur-sm filter grayscale-0 transition-all duration-700 group-hover:scale-105 group-hover:blur-[2px]"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-br from-slate-900/65 via-cyan-900/45 to-slate-900/80" />
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(103,232,249,0.46),transparent_24%),radial-gradient(circle_at_82%_88%,rgba(14,116,144,0.56),transparent_35%),linear-gradient(135deg,rgba(15,23,42,0.9),rgba(8,145,178,0.56),rgba(15,23,42,0.9))]" />
+                    <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.14)_0_1px,transparent_1px_18px)]" />
                   </div>
                   <div className="relative flex h-full flex-col justify-end">
                     <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200">
@@ -475,13 +448,8 @@ export default function Home() {
                   key={service.title}
                   className="glass-card group flex min-h-24 overflow-hidden rounded-2xl"
                 >
-                  <div className="relative h-24 w-32 shrink-0 overflow-hidden transition-all duration-700 group-hover:w-60 md:h-auto md:w-44 md:group-hover:w-72">
-                    <img
-                      src={service.image}
-                      alt=""
-                      aria-hidden="true"
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                    />
+                  <div className="relative h-24 w-32 shrink-0 overflow-hidden bg-[radial-gradient(circle_at_24%_20%,rgba(103,232,249,0.8),transparent_13%),linear-gradient(125deg,#0f172a,#0e7490_52%,#a5f3fc)] transition-all duration-700 group-hover:w-60 md:h-auto md:w-44 md:group-hover:w-72">
+                    <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.22)_0_1px,transparent_1px_16px)]" />
                   </div>
                   <div className="flex w-full items-center justify-between gap-5 px-5 py-4">
                     <div>
@@ -549,13 +517,13 @@ export default function Home() {
                   className="stack-card glass-card group overflow-hidden"
                 >
                   <div className="grid gap-0 overflow-hidden md:grid-cols-[420px_1fr]">
-                    <div className="overflow-hidden">
-                      <img
-                        ref={setMediaRef(index)}
-                        src={project.image}
-                        alt={`${project.title} preview`}
-                        className="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                      />
+                    <div
+                      ref={setMediaRef(index)}
+                      aria-hidden="true"
+                      className="relative h-56 overflow-hidden bg-[radial-gradient(circle_at_74%_22%,rgba(165,243,252,0.78),transparent_14%),radial-gradient(circle_at_26%_80%,rgba(8,145,178,0.65),transparent_30%),linear-gradient(135deg,#082f49,#0e7490_52%,#cffafe)] transition-transform duration-700 group-hover:scale-105"
+                    >
+                      <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.16)_0_1px,transparent_1px_20px)]" />
+                      <div className="absolute bottom-7 left-7 h-16 w-40 rounded-xl border border-white/40 bg-slate-950/20 backdrop-blur-sm" />
                     </div>
                     <div className="p-6 md:p-8">
                       <h3 className="text-2xl font-semibold text-cyan-900 dark:text-cyan-100">
