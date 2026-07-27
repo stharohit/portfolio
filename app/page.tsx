@@ -56,19 +56,25 @@ const services = [
     "AI workflows",
     "Useful AI-assisted systems for research, drafting, QA, and internal operations where they reduce real work.",
   ],
+  [
+    "Integration & APIs",
+    "Reliable connections between the services, data, and workflows your product depends on.",
+  ],
 ];
 
 const principles = ["Reliable", "Clear", "Maintainable", "Client-led"];
 
 const technologies = [
-  { name: "Next.js", mark: "N/", role: "Product interfaces" },
-  { name: "React", mark: "◎", role: "Interactive UI" },
-  { name: "TypeScript", mark: "TS", role: "Safer delivery" },
-  { name: "Node.js", mark: "⬡", role: "Application services" },
-  { name: "tRPC", mark: "TR", role: "Typed APIs" },
-  { name: "MongoDB", mark: "M", role: "Flexible data" },
-  { name: "Tailwind CSS", mark: "≈", role: "Interface systems" },
-  { name: "TDD", mark: "✓", role: "Confidence in change" },
+  { name: "Next.js", icon: "nextdotjs", role: "Framework" },
+  { name: "React", icon: "react", role: "UI library" },
+  { name: "TypeScript", icon: "typescript", role: "Language" },
+  { name: "Node.js", icon: "nodedotjs", role: "Runtime" },
+  { name: "tRPC", icon: "trpc", role: "Typed APIs" },
+  { name: "MongoDB", icon: "mongodb", role: "Data layer" },
+  { name: "Tailwind CSS", icon: "tailwindcss", role: "Interface system" },
+  { name: "Jest", icon: "jest", role: "Testing" },
+  { name: "Vercel", icon: "vercel", role: "Delivery" },
+  { name: "AI Agents", icon: "ai-agents", role: "Practical automation" },
 ];
 
 const notes = [
@@ -180,7 +186,7 @@ export default function Home() {
         <section className="hero" id="top" aria-labelledby="hero-title">
           <Image
             className="hero-art"
-            src="/images/orbital-signal-hero.png"
+            src={isLight ? "/images/orbital-signal-hero-light.png" : "/images/orbital-signal-hero.png"}
             alt=""
             fill
             priority
@@ -188,6 +194,7 @@ export default function Home() {
           />
           <div className="hero-scrim" />
           <div className="site-grid hero-grid" aria-hidden="true" />
+          <ol className="hero-rail" aria-hidden="true"><li>01</li><li /><li /><li /><li /><li>06</li></ol>
           <div className="content hero-content">
             <p className="eyebrow"><span /> Available for select projects</p>
             <h1 id="hero-title">I build <em>dependable</em> web products.</h1>
@@ -209,23 +216,6 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="statement-section" id="about" aria-labelledby="about-title">
-          <div className="content statement-layout">
-            <div>
-              <p className="eyebrow">01 / About</p>
-              <h2 id="about-title">Engineering should make the next decision <em>easier.</em></h2>
-            </div>
-            <div className="statement-copy">
-              <p>
-                I work with teams that need thoughtful execution without the drama: a clear plan, steady communication, and code that holds up after launch.
-              </p>
-              <p>
-                My work sits where product judgment meets full stack delivery: interfaces people can use, systems teams can maintain, and practical AI workflows when they earn their place.
-              </p>
-            </div>
-          </div>
-        </section>
-
         <section className="work-section" id="work" aria-labelledby="work-title">
           <div className="content">
             <div className="section-heading">
@@ -235,9 +225,9 @@ export default function Home() {
               </div>
               <p>Three focused examples of the kind of systems I help teams shape, repair, and move forward.</p>
             </div>
-            <div className="project-list">
+            <div className="project-grid">
               {projects.map((project) => (
-                <article className="project-row" key={project.number}>
+                <article className="project-card" key={project.number}>
                   <div className={`project-visual ${project.visual}`} aria-hidden="true">
                     <span className="project-orbit project-orbit--one" />
                     <span className="project-orbit project-orbit--two" />
@@ -245,15 +235,14 @@ export default function Home() {
                     <span className="project-node project-node--one" />
                     <span className="project-node project-node--two" />
                   </div>
-                  <div className="project-index">{project.number}</div>
                   <div className="project-copy">
-                    <p className="project-category">{project.category}</p>
+                    <p className="project-category">{project.number} / {project.category}</p>
                     <h3>{project.title}</h3>
                     <p>{project.summary}</p>
                     <div className="stack-list">
                       {project.stack.map((item) => <span key={item}>{item}</span>)}
                     </div>
-                    <a className="text-link" href="#contact">Discuss a similar project <span aria-hidden="true">↗</span></a>
+                    <a className="project-link" href="#contact" aria-label={`Discuss ${project.title}`}>↗</a>
                   </div>
                 </article>
               ))}
@@ -271,9 +260,8 @@ export default function Home() {
             <ol className="service-list">
               {services.map(([title, description], index) => (
                 <li key={title}>
-                  <span>0{index + 1}</span>
-                  <div><h3>{title}</h3><p>{description}</p></div>
-                  <span className="service-arrow" aria-hidden="true">↗</span>
+                  <span className="service-icon" aria-hidden="true"><i /><i /><i /></span>
+                  <div><p>0{index + 1}</p><h3>{title}</h3><span>{description}</span></div>
                 </li>
               ))}
             </ol>
@@ -292,7 +280,7 @@ export default function Home() {
             <ul className="technology-grid" aria-label="Technology stack">
               {technologies.map((technology) => (
                 <li key={technology.name}>
-                  <span className="technology-mark" aria-hidden="true">{technology.mark}</span>
+                  <span className="technology-mark"><Image src={`/stack/${technology.icon}.svg`} alt="" width={34} height={34} /></span>
                   <strong>{technology.name}</strong>
                   <span>{technology.role}</span>
                 </li>
@@ -318,10 +306,23 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="statement-section" id="about" aria-labelledby="about-title">
+          <div className="content statement-layout">
+            <div>
+              <p className="eyebrow">06 / About</p>
+              <h2 id="about-title">Engineering should make the next decision <em>easier.</em></h2>
+            </div>
+            <div className="statement-copy">
+              <p>I work with teams that need thoughtful execution without the drama: a clear plan, steady communication, and code that holds up after launch.</p>
+              <p>My work sits where product judgment meets full stack delivery: interfaces people can use, systems teams can maintain, and practical AI workflows when they earn their place.</p>
+            </div>
+          </div>
+        </section>
+
         <section className="notes-section" id="notes" aria-labelledby="notes-title">
           <div className="content">
             <div className="section-heading section-heading--compact">
-              <div><p className="eyebrow">06 / Field notes</p><h2 id="notes-title">Useful ideas, plainly written.</h2></div>
+              <div><p className="eyebrow">07 / Field notes</p><h2 id="notes-title">Useful ideas, plainly written.</h2></div>
               <a className="text-link" href="#contact">Ask about a project <span aria-hidden="true">↗</span></a>
             </div>
             <div className="note-grid">
@@ -337,7 +338,7 @@ export default function Home() {
         <section className="contact-section" id="contact" aria-labelledby="contact-title">
           <div className="content contact-layout">
             <div className="contact-copy">
-              <p className="eyebrow">07 / Let&apos;s connect</p>
+              <p className="eyebrow">08 / Let&apos;s connect</p>
               <h2 id="contact-title">Let&apos;s build something <em>meaningful.</em></h2>
               <p>Tell me what you&apos;re trying to improve or bring to life. I&apos;ll reply with a clear next step.</p>
               <ul>
