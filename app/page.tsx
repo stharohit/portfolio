@@ -7,6 +7,7 @@ import { FormEvent, useEffect, useState } from "react";
 const navigation = [
   { href: "#work", label: "Work" },
   { href: "#services", label: "Services" },
+  { href: "#stack", label: "Stack" },
   { href: "#about", label: "About" },
   { href: "#notes", label: "Notes" },
   { href: "#contact", label: "Contact" },
@@ -58,6 +59,17 @@ const services = [
 ];
 
 const principles = ["Reliable", "Clear", "Maintainable", "Client-led"];
+
+const technologies = [
+  { name: "Next.js", mark: "N/", role: "Product interfaces" },
+  { name: "React", mark: "◎", role: "Interactive UI" },
+  { name: "TypeScript", mark: "TS", role: "Safer delivery" },
+  { name: "Node.js", mark: "⬡", role: "Application services" },
+  { name: "tRPC", mark: "TR", role: "Typed APIs" },
+  { name: "MongoDB", mark: "M", role: "Flexible data" },
+  { name: "Tailwind CSS", mark: "≈", role: "Interface systems" },
+  { name: "TDD", mark: "✓", role: "Confidence in change" },
+];
 
 const notes = [
   {
@@ -268,9 +280,30 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="stack-section" id="stack" aria-labelledby="stack-title">
+          <div className="content stack-layout">
+            <div className="stack-intro">
+              <p className="eyebrow">04 / Modern stack</p>
+              <h2 id="stack-title">Modern tools. <em>Thoughtful choices.</em></h2>
+              <p>
+                A focused toolkit for building quickly without leaving the next person with a fragile system.
+              </p>
+            </div>
+            <ul className="technology-grid" aria-label="Technology stack">
+              {technologies.map((technology) => (
+                <li key={technology.name}>
+                  <span className="technology-mark" aria-hidden="true">{technology.mark}</span>
+                  <strong>{technology.name}</strong>
+                  <span>{technology.role}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         <section className="principles-section" aria-labelledby="principles-title">
           <div className="content">
-            <p className="eyebrow">04 / Delivery values</p>
+            <p className="eyebrow">05 / Delivery values</p>
             <h2 id="principles-title">How I build and <em>deliver.</em></h2>
             <div className="principle-grid">
               {principles.map((principle, index) => (
@@ -288,7 +321,7 @@ export default function Home() {
         <section className="notes-section" id="notes" aria-labelledby="notes-title">
           <div className="content">
             <div className="section-heading section-heading--compact">
-              <div><p className="eyebrow">05 / Field notes</p><h2 id="notes-title">Useful ideas, plainly written.</h2></div>
+              <div><p className="eyebrow">06 / Field notes</p><h2 id="notes-title">Useful ideas, plainly written.</h2></div>
               <a className="text-link" href="#contact">Ask about a project <span aria-hidden="true">↗</span></a>
             </div>
             <div className="note-grid">
@@ -304,7 +337,7 @@ export default function Home() {
         <section className="contact-section" id="contact" aria-labelledby="contact-title">
           <div className="content contact-layout">
             <div className="contact-copy">
-              <p className="eyebrow">06 / Let&apos;s connect</p>
+              <p className="eyebrow">07 / Let&apos;s connect</p>
               <h2 id="contact-title">Let&apos;s build something <em>meaningful.</em></h2>
               <p>Tell me what you&apos;re trying to improve or bring to life. I&apos;ll reply with a clear next step.</p>
               <ul>
