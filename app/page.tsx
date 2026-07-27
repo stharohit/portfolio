@@ -1,683 +1,332 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useEffect, useRef, useState } from "react";
-import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FormEvent, useEffect, useState } from "react";
 
-type ContactState = "idle" | "success" | "error";
-
-type NavItem = {
-  href: string;
-  label: string;
-};
-
-type BentoCard = {
-  title: string;
-  description: string;
-  spans: string;
-  tone: "left" | "right";
-};
-
-type ServiceRole = {
-  title: string;
-  focus: string;
-  stack: string;
-};
-
-type Project = {
-  title: string;
-  blurb: string;
-  focus: string;
-};
-
-type Post = {
-  title: string;
-  excerpt: string;
-};
-
-const nav: NavItem[] = [
-  { href: "#about", label: "About" },
+const navigation = [
+  { href: "#work", label: "Work" },
   { href: "#services", label: "Services" },
-  { href: "#projects", label: "Projects" },
-  { href: "#blog", label: "Blog" },
+  { href: "#about", label: "About" },
+  { href: "#notes", label: "Notes" },
   { href: "#contact", label: "Contact" },
 ];
 
-const bentoCards: BentoCard[] = [
+const projects = [
   {
-    title: "Full Stack Product Development",
-    description:
-      "I ship end-to-end web apps with reliable architecture, clean API contracts, and maintainable deployment practices.",
-    spans: "col-span-2 row-span-2",
-    tone: "left",
-  },
-  {
-    title: "Website Buildouts",
-    description:
-      "Landing pages, portfolio sites, and marketing platforms tuned for speed, clarity, and conversion.",
-    spans: "col-span-2 row-span-1",
-    tone: "right",
-  },
-  {
-    title: "AI-Assisted Workflows",
-    description:
-      "AI agent loops for research, drafts, QA checklists, and support automation where they reduce manual overhead.",
-    spans: "col-span-1 row-span-1",
-    tone: "left",
-  },
-  {
-    title: "Backend Modernization",
-    description:
-      "Refactoring existing systems with stable API layers, stronger data validation, and pragmatic observability.",
-    spans: "col-span-1 row-span-1",
-    tone: "right",
-  },
-];
-
-const serviceRoles: ServiceRole[] = [
-  {
-    title: "Freelance Product Builder",
-    focus: "Greenfield startup launches and MVP development",
-    stack: "Next.js, TypeScript, Prisma",
-  },
-  {
-    title: "Legacy App Modernizer",
-    focus: "Refactoring unstable features with fast, safe delivery",
-    stack: "Node.js, React, PostgreSQL",
-  },
-  {
-    title: "Interface & Workflow Repair",
-    focus: "Usability fixes and maintainability for existing teams",
-    stack: "Node.js, TRPC, Tailwind",
-  },
-];
-
-const projects: Project[] = [
-  {
+    number: "01",
     title: "Travel Product Suite Refresh",
-    blurb:
-      "A rebuilt experience with clearer booking flow, resilient state handling, and cleaner information architecture.",
-    focus: "Next.js, Node.js, API contracts",
+    category: "Product rebuild",
+    summary:
+      "A clearer booking experience built around resilient state handling and calmer information architecture.",
+    stack: ["Next.js", "Node.js", "API contracts"],
+    visual: "project-visual--orbit",
   },
   {
+    number: "02",
     title: "Operations Dashboard Upgrade",
-    blurb:
-      "Dashboard flows were simplified for agents, with robust components that reduced context switching and delivery friction.",
-    focus: "TypeScript, React, TDD",
+    category: "Workflow repair",
+    summary:
+      "A focused operations surface that makes high-volume work easier to scan, act on, and hand off.",
+    stack: ["TypeScript", "React", "TDD"],
+    visual: "project-visual--grid",
   },
   {
+    number: "03",
     title: "Service Team Client Portal",
-    blurb:
-      "Role-aware flows and clear status patterns were introduced to improve coordination and reduce handoff errors.",
-    focus: "Node.js, Next.js, MongoDB",
+    category: "Role-aware platform",
+    summary:
+      "Clear status patterns and role-aware flows for teams coordinating across a shared client workspace.",
+    stack: ["Node.js", "Next.js", "MongoDB"],
+    visual: "project-visual--signal",
   },
 ];
 
-const marqueeWords = [
-  "Reliable",
-  "Fast",
-  "Polished",
-  "Maintainable",
-  "Secure",
-  "Scalable",
-  "AI-Enabled",
-  "Client-Led",
-  "Remote-friendly",
+const services = [
+  [
+    "Product development",
+    "End-to-end web apps with clean architecture, reliable APIs, and a delivery rhythm your team can follow.",
+  ],
+  [
+    "System repair",
+    "Practical refactors for slow, fragile, or difficult-to-change products without unnecessary rewrites.",
+  ],
+  [
+    "AI workflows",
+    "Useful AI-assisted systems for research, drafting, QA, and internal operations where they reduce real work.",
+  ],
 ];
 
-const blogPosts: Post[] = [
+const principles = ["Reliable", "Clear", "Maintainable", "Client-led"];
+
+const notes = [
   {
-    title: "How I approach app modernization",
-    excerpt:
-      "I start with usage patterns, then remove bottlenecks before adding enhancements. This keeps every sprint predictable and keeps risk visible.",
+    date: "Working note 01",
+    title: "Modernization starts with the work people actually do.",
+    text: "Before changing code, I map the decisions, bottlenecks, and risky handoffs that shape everyday use.",
   },
   {
-    title: "Starting a greenfield project without chaos",
-    excerpt:
-      "I define contracts and release checkpoints early so teams stay aligned and decisions remain reversible when needed.",
+    date: "Working note 02",
+    title: "A good build stays understandable after launch.",
+    text: "Architecture, naming, and release practices should help the next person move with confidence.",
   },
 ];
-
-const aboutWords =
-  "I shape dependable web products for teams that move quickly and need practical execution. From first architecture sketch to clean deployment handoff, I focus on clarity in code, communication in delivery, and outcomes that stay supportable in real teams.".split(
-  " "
-);
 
 export default function Home() {
-  const [isDark, setIsDark] = useState(
-    () => typeof window !== "undefined" && localStorage.getItem("portfolio-theme") === "dark"
-  );
-  const [mail, setMail] = useState("");
+  const [isLight, setIsLight] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [email, setEmail] = useState("");
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-  const [botCheck, setBotCheck] = useState("");
-  const [status, setStatus] = useState<ContactState>("idle");
-
-  const pageRef = useRef<HTMLDivElement>(null);
-  const aboutTextRef = useRef<HTMLParagraphElement>(null);
-  const projectsSectionRef = useRef<HTMLElement>(null);
-  const projectsTitleRef = useRef<HTMLDivElement>(null);
-  const projectsGalleryRef = useRef<HTMLDivElement>(null);
-  const stackRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const mediaRefs = useRef<(HTMLDivElement | null)[]>([]);
-
-  const setStackRef = (index: number) => (el: HTMLDivElement | null) => {
-    stackRefs.current[index] = el;
-  };
-
-  const setMediaRef = (index: number) => (el: HTMLDivElement | null) => {
-    mediaRefs.current[index] = el;
-  };
+  const [honeypot, setHoneypot] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDark);
-    localStorage.setItem("portfolio-theme", isDark ? "dark" : "light");
-  }, [isDark]);
+    document.documentElement.classList.toggle("light", isLight);
+  }, [isLight]);
 
-  useGSAP(
-    () => {
-      gsap.registerPlugin(ScrollTrigger);
-
-      const words = aboutTextRef.current?.querySelectorAll<HTMLSpanElement>(
-        "[data-reveal-word]"
-      );
-      if (words && words.length > 0) {
-        gsap.fromTo(
-          words,
-          { opacity: 0.1, y: 12 },
-          {
-            opacity: 1,
-            y: 0,
-            stagger: 0.03,
-            ease: "none",
-            scrollTrigger: {
-              trigger: aboutTextRef.current,
-              start: "top 72%",
-              end: "bottom 35%",
-              scrub: true,
-            },
-          }
-        );
-      }
-
-      if (
-        window.matchMedia("(min-width: 1024px)").matches &&
-        projectsSectionRef.current &&
-        projectsTitleRef.current &&
-        projectsGalleryRef.current
-      ) {
-        gsap.to(projectsGalleryRef.current, {
-          y: -Math.max(0, projects.length - 2) * 24,
-          ease: "none",
-          scrollTrigger: {
-            trigger: projectsSectionRef.current,
-            start: "top 18%",
-            end: "+=700",
-            scrub: true,
-            pin: projectsTitleRef.current,
-          },
-        });
-      }
-
-      if (window.matchMedia("(min-width: 1024px)").matches) {
-        const stackedCards = stackRefs.current.filter(Boolean);
-        stackedCards.forEach((card, index) => {
-          if (!card) return;
-          gsap.fromTo(
-            card,
-            { y: 0, rotate: 0 },
-            {
-              y: -index * 14,
-              rotate: index % 2 === 0 ? -1.2 : 1.2,
-              zIndex: 20 - index,
-              scrollTrigger: {
-                trigger: projectsSectionRef.current,
-                start: "top 65%",
-                end: "+=700",
-                scrub: true,
-              },
-            }
-          );
-        });
-      }
-
-      mediaRefs.current.forEach((image) => {
-        if (!image) return;
-        gsap.fromTo(
-          image,
-          { scale: 0.8, opacity: 0.2, filter: "grayscale(100%) contrast(125%)" },
-          {
-            scale: 1,
-            opacity: 0.95,
-            filter: "grayscale(0%) contrast(110%)",
-            scrollTrigger: {
-              trigger: image,
-              start: "top 88%",
-              end: "top 30%",
-              scrub: true,
-            },
-          }
-        );
-      });
-    },
-    { scope: pageRef }
-  );
-
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (botCheck.length > 0) {
-      return;
-    }
+    if (honeypot) return;
 
-    const payload = `mailto:stha.rht028@gmail.com?subject=${encodeURIComponent(
-      subject || "Portfolio Inquiry"
-    )}&body=${encodeURIComponent(`From: ${mail}\n\n${message}`)}`;
-    window.location.href = payload;
-    setStatus("success");
-    setMail("");
-    setSubject("");
-    setMessage("");
-  };
+    const body = `From: ${email}\n\n${message}`;
+    window.location.href = `mailto:stha.rht028@gmail.com?subject=${encodeURIComponent(
+      subject || "Portfolio inquiry"
+    )}&body=${encodeURIComponent(body)}`;
+    setSubmitted(true);
+  }
+
+  function closeMenu() {
+    setIsMenuOpen(false);
+  }
 
   return (
-    <div
-      ref={pageRef}
-      className="relative min-h-screen overflow-x-hidden w-full max-w-full bg-[radial-gradient(circle_at_top,_rgba(45,212,191,0.15),_transparent_48%),_radial-gradient(circle_at_78%_12%,_rgba(14,116,144,0.22),_transparent_35%),_linear-gradient(140deg,_rgba(236,254,255,0.25),_rgba(248,250,252,0.95))] text-slate-900 dark:bg-[radial-gradient(circle_at_top,_rgba(15,23,42,0.5),_transparent_50%),_linear-gradient(140deg,_#020617,_#0f172a)] dark:text-slate-100"
-    >
-      <a
-        href="#contact"
-        className="fixed bottom-6 right-6 z-50 rounded-full border border-white/30 bg-slate-900/70 px-5 py-3 text-sm font-semibold text-white shadow-[0_10px_35px_rgba(2,6,23,0.5)] backdrop-blur-xl transition hover:bg-cyan-500 dark:bg-white dark:text-slate-900 dark:hover:bg-cyan-200"
-      >
-        Contact Me
+    <div className="site-shell">
+      <a className="skip-link" href="#main-content">
+        Skip to content
       </a>
 
-      <header className="sticky top-4 z-40">
-        <div className="mx-auto flex w-full max-w-6xl rounded-full border border-white/25 bg-white/55 px-5 py-3 backdrop-blur-2xl dark:border-slate-700/70 dark:bg-slate-900/55">
-          <p className="text-sm font-semibold tracking-wide text-cyan-700 dark:text-cyan-200 md:text-base">
+      <header className="site-header">
+        <a className="brand-lockup" href="#top" aria-label="Rohit Man Shrestha home">
+          <Image src="/brand/rm-mark.svg" alt="" width={32} height={32} priority />
+          <span>
             Rohit Man Shrestha
-          </p>
-          <nav className="mx-auto hidden gap-5 text-sm font-medium md:flex">
-            {nav.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="rounded-full px-3 py-1 transition hover:text-cyan-700 hover:ring-1 hover:ring-cyan-200 dark:hover:ring-slate-500"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
+            <small>Senior Software Developer</small>
+          </span>
+        </a>
+
+        <nav className="desktop-nav" aria-label="Primary navigation">
+          {navigation.map((item) => (
+            <a key={item.href} href={item.href}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <div className="header-actions">
           <button
+            className="theme-toggle"
             type="button"
-            onClick={() => setIsDark((prev) => !prev)}
-            aria-label="Toggle theme"
-            className="rounded-full border border-cyan-200/70 bg-white/80 px-3 py-1 text-xs font-semibold text-cyan-700 transition hover:border-cyan-300 hover:bg-cyan-50 md:text-sm dark:border-slate-600 dark:bg-slate-800/80 dark:text-cyan-100"
+            aria-label={`Switch to ${isLight ? "dark" : "light"} mode`}
+            onClick={() => setIsLight((value) => !value)}
           >
-            {isDark ? "Light Mode" : "Dark Mode"}
+            {isLight ? "Dark" : "Light"}
+          </button>
+          <a className="header-cta" href="#contact">
+            Start a conversation
+          </a>
+          <button
+            className="menu-toggle"
+            type="button"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav"
+            onClick={() => setIsMenuOpen((value) => !value)}
+          >
+            <span />
+            <span />
+            <span className="sr-only">Open menu</span>
           </button>
         </div>
+
+        <nav className={`mobile-nav ${isMenuOpen ? "mobile-nav--open" : ""}`} id="mobile-nav" aria-label="Mobile navigation">
+          {navigation.map((item) => (
+            <a key={item.href} href={item.href} onClick={closeMenu}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
       </header>
 
-      <main className="w-full max-w-full overflow-x-hidden">
-        <section
-          id="hero"
-          className="section-shell relative overflow-hidden px-6 py-32 md:py-40"
-        >
-          <div className="pointer-events-none absolute inset-0 -z-10 opacity-80">
-            <div className="absolute inset-0 bg-[linear-gradient(115deg,rgba(8,47,73,0.9),rgba(8,145,178,0.36)_44%,rgba(15,23,42,0.76)),repeating-linear-gradient(135deg,rgba(255,255,255,0.07)_0_1px,transparent_1px_22px)]" />
-            <div className="absolute -left-24 top-0 h-[34rem] w-[34rem] rounded-full border border-cyan-100/20 bg-cyan-300/15 blur-3xl" />
-            <div className="absolute bottom-[-16rem] right-[-10rem] h-[36rem] w-[36rem] rounded-full border border-white/10 bg-slate-950/30 blur-3xl" />
-          </div>
-
-          <div className="mx-auto flex min-h-[78vh] max-w-6xl flex-col justify-center gap-8 text-center md:text-left">
-            <p className="inline-flex w-fit rounded-full border border-cyan-300/70 bg-white/60 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-700 dark:border-cyan-600/90 dark:bg-slate-950/60 dark:text-cyan-200">
-              Senior Software Developer
+      <main id="main-content">
+        <section className="hero" id="top" aria-labelledby="hero-title">
+          <Image
+            className="hero-art"
+            src="/images/orbital-signal-hero.png"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+          />
+          <div className="hero-scrim" />
+          <div className="site-grid hero-grid" aria-hidden="true" />
+          <div className="content hero-content">
+            <p className="eyebrow"><span /> Available for select projects</p>
+            <h1 id="hero-title">I build <em>dependable</em> web products.</h1>
+            <p className="hero-copy">
+              Full stack web development for teams building from scratch or making an existing product easier to trust, use, and grow.
             </p>
-            <h1 className="mx-auto max-w-6xl text-[clamp(3rem,5vw,5.5rem)] leading-[0.95] font-semibold tracking-tight text-white md:mx-0 dark:text-cyan-50">
-              I craft web experiences with
-              <span
-                className="mx-2 inline-block h-10 w-24 rounded-full bg-[radial-gradient(circle_at_20%_24%,rgba(165,243,252,0.95),transparent_15%),linear-gradient(115deg,#164e63,#0e7490_48%,#a5f3fc)] align-middle ring-1 ring-white/30 md:h-12 md:w-28"
-                aria-hidden="true"
-              />
-              modern engineering and practical delivery.
-            </h1>
-            <p className="mx-auto max-w-3xl text-lg text-slate-100 md:mx-0 md:text-xl">
-              Full stack web app and website development for teams building from scratch or
-              improving what already exists.
-            </p>
-            <p className="text-lg font-medium text-cyan-100">
-              I ship dependable results with visible progress and clean ownership.
-            </p>
-            <div className="mt-3 flex flex-wrap justify-center gap-4 md:justify-start">
-              <Link
-                href="#contact"
-                className="rounded-full bg-cyan-500 px-7 py-3 text-sm font-semibold text-white shadow-[0_12px_28px_rgba(8,145,178,0.45)] transition hover:bg-cyan-400"
-              >
-                Let&apos;s work together
+            <div className="hero-actions">
+              <Link className="button button--primary" href="#contact">
+                Let&apos;s work together <span aria-hidden="true">↗</span>
               </Link>
-              <a
-                href="/ROHIT_CV_2025.pdf"
-                className="rounded-full border border-white/40 bg-white/75 px-7 py-3 text-sm font-semibold text-slate-900 transition hover:bg-white/95"
-                download
-              >
-                Download Portfolio
+              <a className="text-link" href="/ROHIT_CV_2025.pdf" download>
+                Download portfolio <span aria-hidden="true">↓</span>
               </a>
             </div>
+            <dl className="hero-facts">
+              <div><dt>Focus</dt><dd>Web apps & websites</dd></div>
+              <div><dt>Stack</dt><dd>Next.js · Node.js · TypeScript</dd></div>
+            </dl>
           </div>
         </section>
 
-        <section id="about" className="section-shell px-6 py-32">
-          <div className="mx-auto grid max-w-6xl gap-10 rounded-3xl border border-white/40 bg-white/60 p-8 shadow-2xl ring-1 ring-white/30 backdrop-blur-2xl md:grid-cols-[1.05fr_0.95fr] dark:border-slate-700/70 dark:bg-slate-900/45 dark:ring-slate-700/50">
+        <section className="statement-section" id="about" aria-labelledby="about-title">
+          <div className="content statement-layout">
             <div>
-              <h2 className="mb-5 text-3xl font-semibold text-cyan-900 dark:text-cyan-100">About</h2>
-              <p
-                ref={aboutTextRef}
-                className="text-sm leading-relaxed text-slate-700 dark:text-slate-200 md:text-base"
-              >
-                {aboutWords.map((word, index) => (
-                  <span
-                    key={`${word}-${index}`}
-                    data-reveal-word
-                    className="reveal-word inline-block"
-                    style={{ opacity: 0.1 }}
-                  >
-                    {word} 
-                  </span>
-                ))}
-              </p>
-              <p className="mt-5 text-sm leading-relaxed text-slate-700 dark:text-slate-200 md:text-base">
-                Story: Rohit began in problem-solving workflows where product quality depended on calm execution and practical engineering.
-                Expertise: Next.js, Node.js, TypeScript, React, and AI agent workflows.
-                Values: clear communication, maintainable code, honest timelines, and predictable quality.
-              </p>
+              <p className="eyebrow">01 / About</p>
+              <h2 id="about-title">Engineering should make the next decision <em>easier.</em></h2>
             </div>
-            <div className="grid gap-4 md:grid-cols-2">
-              <article className="glass-card p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-200">Experience</p>
-                <p className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-                  Freelancer and web developer for startups and teams, leading feature delivery, refactors, and UI modernization.
-                </p>
-              </article>
-              <article className="glass-card p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-cyan-700 dark:text-cyan-200">Role Focus</p>
-                <p className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-                  Product-ready development, full stack architecture, and pragmatic performance upgrades for web applications.
-                </p>
-              </article>
+            <div className="statement-copy">
+              <p>
+                I work with teams that need thoughtful execution without the drama: a clear plan, steady communication, and code that holds up after launch.
+              </p>
+              <p>
+                My work sits where product judgment meets full stack delivery: interfaces people can use, systems teams can maintain, and practical AI workflows when they earn their place.
+              </p>
             </div>
           </div>
         </section>
 
-        <section id="services" className="section-shell px-6 py-32">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="mb-7 text-4xl font-semibold text-cyan-900 dark:text-cyan-100">
-              Services
-            </h2>
-            <p className="max-w-2xl text-slate-700 dark:text-slate-300">
-              Core stack: Next.js, Node.js, TypeScript, React, AI Agents, plus TDD and API-first design.
-            </p>
-
-            <div className="mt-10 grid auto-rows-[200px] gap-4 md:grid-cols-4 md:grid-flow-dense">
-              {bentoCards.map((card) => (
-                <article
-                  key={card.title}
-                  className={`glass-panel group relative overflow-hidden ${card.spans} rounded-3xl border border-white/35 p-5 ring-1 ring-white/30`}
-                >
-                  <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-700 group-hover:opacity-100">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(103,232,249,0.46),transparent_24%),radial-gradient(circle_at_82%_88%,rgba(14,116,144,0.56),transparent_35%),linear-gradient(135deg,rgba(15,23,42,0.9),rgba(8,145,178,0.56),rgba(15,23,42,0.9))]" />
-                    <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.14)_0_1px,transparent_1px_18px)]" />
-                  </div>
-                  <div className="relative flex h-full flex-col justify-end">
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-cyan-200">
-                      {card.tone === "left" ? "Execution" : "Delivery"}
-                    </p>
-                    <h3 className="mt-2 max-w-[22ch] text-2xl font-semibold leading-tight text-white">
-                      {card.title}
-                    </h3>
-                    <p className="mt-3 max-w-[28ch] text-sm leading-relaxed text-slate-100/90">
-                      {card.description}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="mt-10 grid gap-3">
-              {serviceRoles.map((service) => (
-                <article
-                  key={service.title}
-                  className="glass-card group flex min-h-24 overflow-hidden rounded-2xl"
-                >
-                  <div className="relative h-24 w-32 shrink-0 overflow-hidden bg-[radial-gradient(circle_at_24%_20%,rgba(103,232,249,0.8),transparent_13%),linear-gradient(125deg,#0f172a,#0e7490_52%,#a5f3fc)] transition-all duration-700 group-hover:w-60 md:h-auto md:w-44 md:group-hover:w-72">
-                    <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.22)_0_1px,transparent_1px_16px)]" />
-                  </div>
-                  <div className="flex w-full items-center justify-between gap-5 px-5 py-4">
-                    <div>
-                      <h3 className="text-lg font-semibold text-cyan-900 dark:text-cyan-100">{service.title}</h3>
-                      <p className="mt-2 text-sm text-slate-700 dark:text-slate-200">{service.focus}</p>
-                    </div>
-                    <p className="hidden text-right text-sm text-slate-700 dark:text-slate-300 md:block">
-                      {service.stack}
-                    </p>
-                  </div>
-                </article>
-              ))}
-            </div>
-
-            <div className="marquee-wrapper mt-12 overflow-hidden rounded-2xl border border-white/30 bg-white/40 py-4 backdrop-blur-2xl dark:border-slate-700/60 dark:bg-slate-900/55">
-              <div className="marquee-track flex min-w-full items-center gap-10 whitespace-nowrap px-4 text-sm font-semibold tracking-wide text-cyan-800 dark:text-cyan-100">
-                {[...marqueeWords, ...marqueeWords].map((word, index) => (
-                  <span
-                    key={`${word}-${index}`}
-                    className="inline-flex items-center rounded-full border border-cyan-200/50 bg-white/60 px-4 py-2 transition hover:bg-cyan-100/80 dark:border-cyan-500/40 dark:bg-slate-900/50"
-                  >
-                    {word}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section
-          id="projects"
-          ref={projectsSectionRef}
-          className="section-shell px-6 py-32"
-        >
-          <div className="mx-auto grid max-w-6xl gap-10 lg:grid-cols-[360px_1fr]">
-            <div
-              ref={projectsTitleRef}
-              className="glass-card h-fit p-8 lg:sticky lg:top-36"
-            >
-              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-700 dark:text-cyan-200">
-                Featured Projects
-              </p>
-              <h2 className="mt-4 text-4xl font-semibold text-cyan-900 dark:text-cyan-100">
-                Portfolio Highlights
-              </h2>
-              <p className="mt-5 text-sm leading-relaxed text-slate-700 dark:text-slate-300">
-                Three focused build examples that demonstrate modern full stack execution, measurable upgrades, and clear team ownership.
-              </p>
-              <Link
-                href="#contact"
-                className="mt-7 inline-flex rounded-full bg-cyan-600 px-5 py-3 text-sm font-semibold text-white"
-              >
-                Start a project
-              </Link>
-            </div>
-
-            <div
-              ref={projectsGalleryRef}
-              className="space-y-6"
-            >
-              {projects.map((project, index) => (
-                <article
-                  key={project.title}
-                  ref={setStackRef(index)}
-                  className="stack-card glass-card group overflow-hidden"
-                >
-                  <div className="grid gap-0 overflow-hidden md:grid-cols-[420px_1fr]">
-                    <div
-                      ref={setMediaRef(index)}
-                      aria-hidden="true"
-                      className="relative h-56 overflow-hidden bg-[radial-gradient(circle_at_74%_22%,rgba(165,243,252,0.78),transparent_14%),radial-gradient(circle_at_26%_80%,rgba(8,145,178,0.65),transparent_30%),linear-gradient(135deg,#082f49,#0e7490_52%,#cffafe)] transition-transform duration-700 group-hover:scale-105"
-                    >
-                      <div className="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(255,255,255,0.16)_0_1px,transparent_1px_20px)]" />
-                      <div className="absolute bottom-7 left-7 h-16 w-40 rounded-xl border border-white/40 bg-slate-950/20 backdrop-blur-sm" />
-                    </div>
-                    <div className="p-6 md:p-8">
-                      <h3 className="text-2xl font-semibold text-cyan-900 dark:text-cyan-100">
-                        {project.title}
-                      </h3>
-                      <p className="mt-3 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-                        {project.blurb}
-                      </p>
-                      <p className="mt-4 text-xs font-semibold uppercase tracking-[0.15em] text-slate-500 dark:text-slate-400">
-                        {project.focus}
-                      </p>
-                      <button
-                        type="button"
-                        className="mt-5 inline-flex rounded-full border border-cyan-200 px-4 py-2 text-sm font-semibold text-cyan-700 transition group-hover:border-cyan-400 dark:border-slate-600 dark:text-cyan-200"
-                      >
-                        View details
-                      </button>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="blog" className="section-shell px-6 py-32">
-          <div className="mx-auto max-w-6xl">
-            <h2 className="mb-8 text-4xl font-semibold text-cyan-900 dark:text-cyan-100">
-              Blog / Insights
-            </h2>
-            <div className="grid gap-6 md:grid-cols-2">
-              {blogPosts.map((post) => (
-                <article key={post.title} className="glass-card p-5 md:p-6">
-                  <h3 className="text-xl font-semibold text-cyan-900 dark:text-cyan-100">{post.title}</h3>
-                  <p className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-300">{post.excerpt}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="contact" className="section-shell px-6 py-32">
-          <div className="mx-auto max-w-6xl rounded-3xl border border-white/30 bg-white/60 p-8 ring-1 ring-white/40 backdrop-blur-2xl dark:border-slate-700/80 dark:bg-slate-900/50 dark:ring-slate-700/50">
-            <div className="grid gap-10 md:grid-cols-2">
+        <section className="work-section" id="work" aria-labelledby="work-title">
+          <div className="content">
+            <div className="section-heading">
               <div>
-                <h2 className="text-4xl font-semibold text-cyan-900 dark:text-cyan-100">
-                  Let&apos;s Build Together
-                </h2>
-                <p className="mt-4 text-sm leading-relaxed text-slate-700 dark:text-slate-200">
-                  Reach me directly for a brief discovery chat: clean architecture, predictable delivery, and practical project planning.
-                </p>
-                <div className="mt-6 space-y-2">
-                  <p className="text-sm text-slate-700 dark:text-slate-100">
-                    Email: {" "}
-                    <a href="mailto:stha.rht028@gmail.com" className="underline underline-offset-4">
-                      stha.rht028@gmail.com
-                    </a>
-                  </p>
-                  <p className="text-sm text-slate-700 dark:text-slate-100">
-                    LinkedIn: {" "}
-                    <a href="https://www.linkedin.com/in/rohitshrestha" target="_blank" rel="noreferrer" className="underline underline-offset-4">
-                      linkedin.com/in/rohitshrestha
-                    </a>
-                  </p>
-                  <p className="text-sm text-slate-700 dark:text-slate-100">
-                    GitHub: {" "}
-                    <a href="https://github.com/stharohit" target="_blank" rel="noreferrer" className="underline underline-offset-4">
-                      github.com/stharohit
-                    </a>
-                  </p>
-                </div>
+                <p className="eyebrow">02 / Selected work</p>
+                <h2 id="work-title">Ideas, engineered.<br /><em>Impact, delivered.</em></h2>
               </div>
-
-              <form onSubmit={onSubmit} className="grid gap-4">
-                <label className="grid gap-2">
-                  <span className="text-sm font-medium">Email</span>
-                  <input
-                    type="email"
-                    required
-                    value={mail}
-                    onChange={(event) => setMail(event.target.value)}
-                    placeholder="you@company.com"
-                    className="w-full rounded-xl border border-slate-300 bg-white/85 px-4 py-3 text-sm outline-none transition focus:border-cyan-500 dark:border-slate-700 dark:bg-slate-950"
-                  />
-                </label>
-                <label className="grid gap-2">
-                  <span className="text-sm font-medium">Subject</span>
-                  <input
-                    type="text"
-                    required
-                    value={subject}
-                    onChange={(event) => setSubject(event.target.value)}
-                    placeholder="Project enquiry"
-                    className="w-full rounded-xl border border-slate-300 bg-white/85 px-4 py-3 text-sm outline-none transition focus:border-cyan-500 dark:border-slate-700 dark:bg-slate-950"
-                  />
-                </label>
-                <label className="grid gap-2">
-                  <span className="text-sm font-medium">Message</span>
-                  <textarea
-                    required
-                    rows={5}
-                    value={message}
-                    onChange={(event) => setMessage(event.target.value)}
-                    placeholder="Tell me what you want to build or improve"
-                    className="w-full rounded-xl border border-slate-300 bg-white/85 px-4 py-3 text-sm outline-none transition focus:border-cyan-500 dark:border-slate-700 dark:bg-slate-950"
-                  />
-                </label>
-                <label className="sr-only" htmlFor="website-url">
-                  Leave this field empty
-                </label>
-                <input
-                  id="website-url"
-                  value={botCheck}
-                  onChange={(event) => setBotCheck(event.target.value)}
-                  autoComplete="off"
-                  className="absolute left-[-9999px] h-0 w-0 opacity-0"
-                  tabIndex={-1}
-                />
-                <button
-                  type="submit"
-                  className="rounded-xl bg-cyan-600 px-6 py-3 text-sm font-semibold text-white transition hover:bg-cyan-500"
-                >
-                  Send via Email Client
-                </button>
-                {status === "success" && (
-                  <p className="text-sm text-emerald-600 dark:text-emerald-300">
-                    Message ready in your email client. If blocked, copy details and send manually.
-                  </p>
-                )}
-                {status === "error" && (
-                  <p className="text-sm text-red-600">Something went wrong. Please retry.</p>
-                )}
-              </form>
+              <p>Three focused examples of the kind of systems I help teams shape, repair, and move forward.</p>
             </div>
+            <div className="project-list">
+              {projects.map((project) => (
+                <article className="project-row" key={project.number}>
+                  <div className={`project-visual ${project.visual}`} aria-hidden="true">
+                    <span className="project-orbit project-orbit--one" />
+                    <span className="project-orbit project-orbit--two" />
+                    <span className="project-orbit project-orbit--three" />
+                    <span className="project-node project-node--one" />
+                    <span className="project-node project-node--two" />
+                  </div>
+                  <div className="project-index">{project.number}</div>
+                  <div className="project-copy">
+                    <p className="project-category">{project.category}</p>
+                    <h3>{project.title}</h3>
+                    <p>{project.summary}</p>
+                    <div className="stack-list">
+                      {project.stack.map((item) => <span key={item}>{item}</span>)}
+                    </div>
+                    <a className="text-link" href="#contact">Discuss a similar project <span aria-hidden="true">↗</span></a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="services-section" id="services" aria-labelledby="services-title">
+          <div className="content services-layout">
+            <div className="services-intro">
+              <p className="eyebrow">03 / Services</p>
+              <h2 id="services-title">From concept to <em>reliable software.</em></h2>
+              <p>I take responsibility for the work between a clear idea and a useful, maintainable result.</p>
+            </div>
+            <ol className="service-list">
+              {services.map(([title, description], index) => (
+                <li key={title}>
+                  <span>0{index + 1}</span>
+                  <div><h3>{title}</h3><p>{description}</p></div>
+                  <span className="service-arrow" aria-hidden="true">↗</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        <section className="principles-section" aria-labelledby="principles-title">
+          <div className="content">
+            <p className="eyebrow">04 / Delivery values</p>
+            <h2 id="principles-title">How I build and <em>deliver.</em></h2>
+            <div className="principle-grid">
+              {principles.map((principle, index) => (
+                <article key={principle}>
+                  <span className="principle-orbit" aria-hidden="true"><i /><i /><i /></span>
+                  <p>0{index + 1}</p>
+                  <h3>{principle}</h3>
+                  <span>{["Solid foundations before speed.", "Visible trade-offs, plain language.", "Built for the next change.", "Progress you can actually see."][index]}</span>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="notes-section" id="notes" aria-labelledby="notes-title">
+          <div className="content">
+            <div className="section-heading section-heading--compact">
+              <div><p className="eyebrow">05 / Field notes</p><h2 id="notes-title">Useful ideas, plainly written.</h2></div>
+              <a className="text-link" href="#contact">Ask about a project <span aria-hidden="true">↗</span></a>
+            </div>
+            <div className="note-grid">
+              {notes.map((note) => (
+                <article key={note.date}>
+                  <p>{note.date}</p><h3>{note.title}</h3><span>{note.text}</span>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="contact-section" id="contact" aria-labelledby="contact-title">
+          <div className="content contact-layout">
+            <div className="contact-copy">
+              <p className="eyebrow">06 / Let&apos;s connect</p>
+              <h2 id="contact-title">Let&apos;s build something <em>meaningful.</em></h2>
+              <p>Tell me what you&apos;re trying to improve or bring to life. I&apos;ll reply with a clear next step.</p>
+              <ul>
+                <li><a href="mailto:stha.rht028@gmail.com">stha.rht028@gmail.com</a></li>
+                <li><a href="https://www.linkedin.com/in/rohitshrestha" target="_blank" rel="noreferrer">LinkedIn</a></li>
+                <li><a href="https://github.com/stharohit" target="_blank" rel="noreferrer">GitHub</a></li>
+              </ul>
+            </div>
+            <form className="contact-form" onSubmit={handleSubmit}>
+              <div className="form-row">
+                <label>Email<input type="email" required value={email} onChange={(event) => setEmail(event.target.value)} placeholder="you@company.com" /></label>
+                <label>Subject<input required value={subject} onChange={(event) => setSubject(event.target.value)} placeholder="What can I help with?" /></label>
+              </div>
+              <label>Message<textarea required rows={6} value={message} onChange={(event) => setMessage(event.target.value)} placeholder="A little context: what are you building, changing, or trying to solve?" /></label>
+              <label className="honeypot" htmlFor="company-site">Company site</label>
+              <input id="company-site" className="honeypot" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(event) => setHoneypot(event.target.value)} />
+              <button className="button button--primary" type="submit">Start a conversation <span aria-hidden="true">↗</span></button>
+              {submitted && <p className="form-success" role="status">Your email client is ready. If it did not open, email me directly.</p>}
+            </form>
           </div>
         </section>
       </main>
 
-      <footer className="border-t border-white/30 py-10 dark:border-slate-700/80">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-4 px-6 text-sm md:flex-row md:items-center">
-          <p>Rohit Man Shrestha · Senior Software Developer</p>
-          <div className="flex items-center gap-5 text-cyan-700 dark:text-cyan-200">
-            <a href="https://www.linkedin.com/in/rohitshrestha" target="_blank" rel="noreferrer">
-              LinkedIn
-            </a>
-            <a href="https://github.com/stharohit" target="_blank" rel="noreferrer">
-              GitHub
-            </a>
-            <a href="/ROHIT_CV_2025.pdf" download>
-              Download CV
-            </a>
-          </div>
+      <a className="floating-contact" href="#contact">Contact <span aria-hidden="true">↗</span></a>
+      <footer className="site-footer">
+        <div className="content footer-content">
+          <div className="footer-brand"><Image src="/brand/rm-mark.svg" alt="" width={26} height={26} /><span>Rohit Man Shrestha</span></div>
+          <span>Built with focus. Shipped with care.</span>
+          <a href="#top">Back to top ↑</a>
         </div>
       </footer>
     </div>
