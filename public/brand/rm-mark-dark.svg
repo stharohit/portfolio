@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title desc">
+  <title id="title">RM monogram</title>
+  <desc id="desc">Rohit Man Shrestha monogram with a cyan signal point for dark surfaces</desc>
+  <path fill="#F6FBFC" d="M10 48V15h15.2c8.7 0 13.3 4.2 13.3 11 0 4.5-2.3 8-6.5 9.9L40 48h-8.6l-6.9-10.1H18V48H10Zm8-16.2h6.6c3.8 0 5.8-1.9 5.8-5.2 0-3.4-2-5.1-5.8-5.1H18v10.3Z"/>
+  <path fill="#F6FBFC" d="M42 48V15h5.9l6.1 12.6L60 15h4v33h-7.2V30.4l-4 8.2h-2.1l-4-8.2V48H42Z" transform="translate(-4 0) scale(.95 1)"/>
+  <circle cx="55" cy="11" r="4" fill="#22D3EE"/>
+</svg>

@@ -139,7 +139,7 @@ export default function Home() {
 
       <header className="site-header">
         <a className="brand-lockup" href="#top" aria-label="Rohit Man Shrestha home">
-          <Image src="/brand/rm-mark.svg" alt="" width={32} height={32} priority />
+          <Image src={isLight ? "/brand/rm-mark.svg" : "/brand/rm-mark-dark.svg"} alt="" width={32} height={32} priority />
           <span>
             Rohit Man Shrestha
             <small>Senior Software Developer</small>
@@ -381,7 +381,7 @@ export default function Home() {
       <a className="floating-contact" href="#contact">Contact <span aria-hidden="true">↗</span></a>
       <footer className="site-footer">
         <div className="content footer-content">
-          <div className="footer-brand"><Image src="/brand/rm-mark.svg" alt="" width={26} height={26} /><span>Rohit Man Shrestha</span></div>
+          <div className="footer-brand"><Image src={isLight ? "/brand/rm-mark.svg" : "/brand/rm-mark-dark.svg"} alt="" width={26} height={26} /><span>Rohit Man Shrestha</span></div>
           <span>Built with focus. Shipped with care.</span>
           <a href="#top">Back to top ↑</a>
         </div>
