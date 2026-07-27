@@ -204,7 +204,9 @@ export default function Home() {
           </button>
         </div>
 
-        <nav className={`mobile-nav ${isMenuOpen ? "mobile-nav--open" : ""}`} id="mobile-nav" aria-label="Mobile navigation">
+      </header>
+
+      <nav className={`mobile-nav ${isMenuOpen ? "mobile-nav--open" : ""}`} id="mobile-nav" aria-label="Mobile navigation">
           {navigation.map((item) => (
             <a key={item.href} href={item.href} onClick={closeMenu}>
               {item.label}
@@ -222,9 +224,8 @@ export default function Home() {
               {isLight ? "Dark mode" : "Light mode"}
             </button>
           </div>
-        </nav>
-        <button className={`mobile-menu-backdrop ${isMenuOpen ? "mobile-menu-backdrop--open" : ""}`} type="button" aria-label="Close menu" onClick={closeMenu} />
-      </header>
+      </nav>
+      <button className={`mobile-menu-backdrop ${isMenuOpen ? "mobile-menu-backdrop--open" : ""}`} type="button" aria-label="Close menu" onClick={closeMenu} />
 
       <main id="main-content">
         <section className="hero" id="top" aria-labelledby="hero-title">
