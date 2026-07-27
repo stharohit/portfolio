@@ -116,6 +116,19 @@ function ServiceIcon({ index }: { index: number }) {
   return <svg viewBox="0 0 64 64" fill="none"><path d="M25 23h-7a9 9 0 0 0 0 18h7M39 23h7a9 9 0 0 1 0 18h-7" stroke="#22C55E" strokeWidth="6" strokeLinecap="round" /><path d="M24 32h16" stroke="#38BDF8" strokeWidth="6" strokeLinecap="round" /><circle cx="32" cy="32" r="5" fill="#FBBF24" /></svg>;
 }
 
+function ThemeGlyph({ isLight }: { isLight: boolean }) {
+  return isLight ? (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <path d="M20.7 14.5A8.5 8.5 0 0 1 9.5 3.3 8.5 8.5 0 1 0 20.7 14.5Z" />
+    </svg>
+  ) : (
+    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+      <circle cx="12" cy="12" r="3.5" />
+      <path d="M12 2v2.2M12 19.8V22M22 12h-2.2M4.2 12H2M19.1 4.9l-1.6 1.6M6.5 17.5l-1.6 1.6M19.1 19.1l-1.6-1.6M6.5 6.5 4.9 4.9" />
+    </svg>
+  );
+}
+
 export default function Home() {
   const [isLight, setIsLight] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -174,16 +187,7 @@ export default function Home() {
             aria-label={`Switch to ${isLight ? "dark" : "light"} mode`}
             onClick={() => setIsLight((value) => !value)}
           >
-            {isLight ? (
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <path d="M20.7 14.5A8.5 8.5 0 0 1 9.5 3.3 8.5 8.5 0 1 0 20.7 14.5Z" />
-              </svg>
-            ) : (
-              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                <circle cx="12" cy="12" r="3.5" />
-                <path d="M12 2v2.2M12 19.8V22M22 12h-2.2M4.2 12H2M19.1 4.9l-1.6 1.6M6.5 17.5l-1.6 1.6M19.1 19.1l-1.6-1.6M6.5 6.5 4.9 4.9" />
-              </svg>
-            )}
+            <ThemeGlyph isLight={isLight} />
             <span className="sr-only">Switch theme</span>
           </button>
           <button
@@ -195,7 +199,8 @@ export default function Home() {
           >
             <span />
             <span />
-            <span className="sr-only">Open menu</span>
+            <span />
+            <span className="sr-only">{isMenuOpen ? "Close" : "Open"} menu</span>
           </button>
         </div>
 
@@ -205,7 +210,20 @@ export default function Home() {
               {item.label}
             </a>
           ))}
+          <div className="mobile-menu-tools">
+            <span>Appearance</span>
+            <button
+              className="mobile-theme-toggle"
+              type="button"
+              aria-label={`Switch to ${isLight ? "dark" : "light"} mode`}
+              onClick={() => setIsLight((value) => !value)}
+            >
+              <ThemeGlyph isLight={isLight} />
+              {isLight ? "Dark mode" : "Light mode"}
+            </button>
+          </div>
         </nav>
+        <button className={`mobile-menu-backdrop ${isMenuOpen ? "mobile-menu-backdrop--open" : ""}`} type="button" aria-label="Close menu" onClick={closeMenu} />
       </header>
 
       <main id="main-content">
