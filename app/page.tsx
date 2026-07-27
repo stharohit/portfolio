@@ -103,6 +103,19 @@ function PrincipleIcon({ index }: { index: number }) {
   return <svg viewBox="0 0 64 64" fill="none"><path d="M10 13h27v20H23L14 42V33h-4V13Z" fill="#EC4899" /><path d="M54 27H27v18h14l9 9v-9h4V27Z" fill="#14B8A6" /><circle cx="23" cy="23" r="3" fill="white" /><circle cx="32" cy="23" r="3" fill="white" /><circle cx="41" cy="23" r="3" fill="white" /></svg>;
 }
 
+function ServiceIcon({ index }: { index: number }) {
+  if (index === 0) {
+    return <svg viewBox="0 0 64 64" fill="none"><path d="m32 7 22 12-22 12L10 19 32 7Z" fill="#2563EB" /><path d="m10 29 22 12 22-12" stroke="#38BDF8" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" /><path d="m10 40 22 12 22-12" stroke="#A78BFA" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" /></svg>;
+  }
+  if (index === 1) {
+    return <svg viewBox="0 0 64 64" fill="none"><path d="M54 15a16 16 0 0 0-19 20L16 54 9 47l19-19a16 16 0 0 0 20-19l-9 9-7-2-2-7 9-9Z" fill="#F97316" /><circle cx="16" cy="48" r="4" fill="#FDE68A" /></svg>;
+  }
+  if (index === 2) {
+    return <svg viewBox="0 0 64 64" fill="none"><path d="M18 32h28M22 21l10 11-10 11M42 21 32 32l10 11" stroke="#8B5CF6" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" /><circle cx="13" cy="32" r="7" fill="#EC4899" /><circle cx="51" cy="32" r="7" fill="#14B8A6" /><circle cx="32" cy="10" r="6" fill="#FBBF24" /></svg>;
+  }
+  return <svg viewBox="0 0 64 64" fill="none"><path d="M25 23h-7a9 9 0 0 0 0 18h7M39 23h7a9 9 0 0 1 0 18h-7" stroke="#22C55E" strokeWidth="6" strokeLinecap="round" /><path d="M24 32h16" stroke="#38BDF8" strokeWidth="6" strokeLinecap="round" /><circle cx="32" cy="32" r="5" fill="#FBBF24" /></svg>;
+}
+
 export default function Home() {
   const [isLight, setIsLight] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -276,7 +289,7 @@ export default function Home() {
             <ol className="service-list">
               {services.map(([title, description], index) => (
                 <li key={title}>
-                  <span className="service-icon" aria-hidden="true"><i /><i /><i /></span>
+                  <span className="service-icon" aria-hidden="true"><ServiceIcon index={index} /></span>
                   <div><p>0{index + 1}</p><h3>{title}</h3><span>{description}</span></div>
                 </li>
               ))}
