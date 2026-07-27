@@ -137,20 +137,48 @@ export default function Home() {
   const [message, setMessage] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle("light", isLight);
   }, [isLight]);
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (honeypot) return;
 
-    const body = `From: ${email}\n\n${message}`;
-    window.location.href = `mailto:stha.rht028@gmail.com?subject=${encodeURIComponent(
-      subject || "Portfolio inquiry"
-    )}&body=${encodeURIComponent(body)}`;
-    setSubmitted(true);
+    setErrorMessage("");
+    setSubmitted(false);
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          email,
+          subject,
+          message,
+          honeypot,
+        }),
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        setErrorMessage(result?.error || "Unable to send your message. Please try again.");
+        return;
+      }
+
+      setSubmitted(true);
+      setEmail("");
+      setSubject("");
+      setMessage("");
+    } catch (_error) {
+      setErrorMessage("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   function closeMenu() {
@@ -407,8 +435,11 @@ export default function Home() {
               <label>Message<textarea required rows={6} value={message} onChange={(event) => setMessage(event.target.value)} placeholder="A little context: what are you building, changing, or trying to solve?" /></label>
               <label className="honeypot" htmlFor="company-site">Company site</label>
               <input id="company-site" className="honeypot" tabIndex={-1} autoComplete="off" value={honeypot} onChange={(event) => setHoneypot(event.target.value)} />
-              <button className="button button--primary" type="submit">Start a conversation <span aria-hidden="true">↗</span></button>
-              {submitted && <p className="form-success" role="status">Your email client is ready. If it did not open, email me directly.</p>}
+              <button className="button button--primary" type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Sending..." : "Start a conversation"} <span aria-hidden="true">↗</span>
+              </button>
+              {submitted && <p className="form-success" role="status">Message sent. I&apos;ll follow up shortly.</p>}
+              {errorMessage && <p className="form-error" role="status">{errorMessage}</p>}
             </form>
           </div>
         </section>
