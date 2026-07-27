@@ -194,7 +194,6 @@ export default function Home() {
           />
           <div className="hero-scrim" />
           <div className="site-grid hero-grid" aria-hidden="true" />
-          <ol className="hero-rail" aria-hidden="true"><li>01</li><li /><li /><li /><li /><li>06</li></ol>
           <div className="content hero-content">
             <p className="eyebrow"><span /> Available for select projects</p>
             <h1 id="hero-title">
