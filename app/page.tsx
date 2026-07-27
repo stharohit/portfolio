@@ -203,6 +203,7 @@ export default function Home() {
       }
 
       if (
+        window.matchMedia("(min-width: 1024px)").matches &&
         projectsSectionRef.current &&
         projectsTitleRef.current &&
         projectsGalleryRef.current
@@ -220,25 +221,27 @@ export default function Home() {
         });
       }
 
-      const stackedCards = stackRefs.current.filter(Boolean);
-      stackedCards.forEach((card, index) => {
-        if (!card) return;
-        gsap.fromTo(
-          card,
-          { y: 0, rotate: 0 },
-          {
-            y: -index * 14,
-            rotate: index % 2 === 0 ? -1.2 : 1.2,
-            zIndex: 20 - index,
-            scrollTrigger: {
-              trigger: projectsSectionRef.current,
-              start: "top 65%",
-              end: "+=700",
-              scrub: true,
-            },
-          }
-        );
-      });
+      if (window.matchMedia("(min-width: 1024px)").matches) {
+        const stackedCards = stackRefs.current.filter(Boolean);
+        stackedCards.forEach((card, index) => {
+          if (!card) return;
+          gsap.fromTo(
+            card,
+            { y: 0, rotate: 0 },
+            {
+              y: -index * 14,
+              rotate: index % 2 === 0 ? -1.2 : 1.2,
+              zIndex: 20 - index,
+              scrollTrigger: {
+                trigger: projectsSectionRef.current,
+                start: "top 65%",
+                end: "+=700",
+                scrub: true,
+              },
+            }
+          );
+        });
+      }
 
       mediaRefs.current.forEach((image) => {
         if (!image) return;
