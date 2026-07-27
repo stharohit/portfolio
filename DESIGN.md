@@ -33,7 +33,8 @@ Use the `RM` monogram for compact navigation, footer, favicons, and loading stat
 | `--paper-200` | `#C8D7DE` | Secondary text |
 | `--signal-400` | `#22D3EE` | Interactive accent |
 | `--signal-500` | `#06B6D4` | Filled CTAs and active states |
-| `--signal-700` | `#0E7490` | Accent on light surfaces |
+| `--signal-700` | `#0E7490` | Accent on dark surfaces |
+| Light-mode accent | `#05748B` | Teal interactive and filled accent in light mode |
 | `--line-subtle` | `rgba(148, 163, 184, 0.2)` | Fine rules and diagrams |
 | `--success-400` | `#34D399` | Availability and success messages |
 
@@ -61,7 +62,7 @@ Use cyan sparingly. The default page is ink and paper; cyan should point to an a
 
 ### Header
 
-Transparent-to-ink sticky header. Monogram on the left, five concise anchors at desktop, and one primary contact action. Mobile uses an explicit menu button with a 44px target.
+Transparent-to-ink sticky header. Monogram on the left, five concise anchors at desktop, and a filled icon-only theme control. Mobile uses an explicit menu button with a 44px target.
 
 ### Hero
 

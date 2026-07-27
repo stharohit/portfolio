@@ -130,11 +130,18 @@ export default function Home() {
             aria-label={`Switch to ${isLight ? "dark" : "light"} mode`}
             onClick={() => setIsLight((value) => !value)}
           >
-            {isLight ? "Dark" : "Light"}
+            {isLight ? (
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <path d="M20.7 14.5A8.5 8.5 0 0 1 9.5 3.3 8.5 8.5 0 1 0 20.7 14.5Z" />
+              </svg>
+            ) : (
+              <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <circle cx="12" cy="12" r="3.5" />
+                <path d="M12 2v2.2M12 19.8V22M22 12h-2.2M4.2 12H2M19.1 4.9l-1.6 1.6M6.5 17.5l-1.6 1.6M19.1 19.1l-1.6-1.6M6.5 6.5 4.9 4.9" />
+              </svg>
+            )}
+            <span className="sr-only">Switch theme</span>
           </button>
-          <a className="header-cta" href="#contact">
-            Start a conversation
-          </a>
           <button
             className="menu-toggle"
             type="button"
