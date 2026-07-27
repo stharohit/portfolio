@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rohit Man Shrestha — Portfolio
 
-## Getting Started
+Personal portfolio for Rohit Man Shrestha, a Senior Software Developer focused on dependable web products, practical modernization, and useful AI workflows.
 
-First, run the development server:
+## Purpose
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This site is a clear place for potential clients and collaborators to understand the kind of work Rohit does and start a conversation about a project.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What I help with
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Full-stack web applications and websites
+- Existing product repair and modernization
+- System architecture, APIs, and integrations
+- Practical AI-assisted workflows
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Portfolio content
 
-## Learn More
+The single-page experience includes:
 
-To learn more about Next.js, take a look at the following resources:
+- A concise introduction and availability signal
+- Selected project placeholders
+- Service offerings
+- Modern technology stack
+- Delivery values and working notes
+- Direct contact links and an inquiry form
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Design direction
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**Spatial Signal** is the visual language for the portfolio: calm technical detail, orbital system illustrations, deep ink surfaces, and a light mode built around `#05748B` teal. Both themes share one layout and use the same core artwork.
 
-## Deploy on Vercel
+Design assets and usage notes are documented in [DESIGN.md](DESIGN.md). The prepared technology-logo inventory is in [STACK_ASSETS.md](STACK_ASSETS.md).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Technology
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Next.js · React · TypeScript · Node.js · tRPC · MongoDB · Tailwind CSS · Jest · Vercel · AI Agents
+
+## Contact
+
+- Email: [stha.rht028@gmail.com](mailto:stha.rht028@gmail.com)
+- LinkedIn: [linkedin.com/in/rohitshrestha](https://www.linkedin.com/in/rohitshrestha)
+- GitHub: [github.com/stharohit](https://github.com/stharohit)
+
+## Domain
+
+The intended public domain is `rohit.info.np`.
