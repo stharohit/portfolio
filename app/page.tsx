@@ -65,7 +65,7 @@ const services = [
 const principles = ["Reliable", "Clear", "Maintainable", "Client-led"];
 
 const technologies = [
-  { name: "Next.js", icon: "nextdotjs", role: "Framework" },
+  { name: "Next.js", icon: "nextdotjs", lightIcon: "nextdotjs-light", role: "Framework" },
   { name: "React", icon: "react", role: "UI library" },
   { name: "TypeScript", icon: "typescript", role: "Language" },
   { name: "Node.js", icon: "nodedotjs", role: "Runtime" },
@@ -73,7 +73,7 @@ const technologies = [
   { name: "MongoDB", icon: "mongodb", role: "Data layer" },
   { name: "Tailwind CSS", icon: "tailwindcss", role: "Interface system" },
   { name: "Jest", icon: "jest", role: "Testing" },
-  { name: "Vercel", icon: "vercel", role: "Delivery" },
+  { name: "Vercel", icon: "vercel", lightIcon: "vercel-light", role: "Delivery" },
   { name: "AI Agents", icon: "ai-agents", role: "Practical automation" },
 ];
 
@@ -309,7 +309,7 @@ export default function Home() {
             <ul className="technology-grid" aria-label="Technology stack">
               {technologies.map((technology) => (
                 <li key={technology.name}>
-                  <span className="technology-mark"><Image src={`/stack/${technology.icon}.svg`} alt="" width={34} height={34} /></span>
+                  <span className="technology-mark"><Image src={`/stack/${isLight ? technology.lightIcon ?? technology.icon : technology.icon}.svg`} alt="" width={34} height={34} /></span>
                   <strong>{technology.name}</strong>
                   <span>{technology.role}</span>
                 </li>
