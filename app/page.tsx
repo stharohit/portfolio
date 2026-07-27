@@ -186,7 +186,7 @@ export default function Home() {
         <section className="hero" id="top" aria-labelledby="hero-title">
           <Image
             className="hero-art"
-            src={isLight ? "/images/orbital-signal-hero-light.png" : "/images/orbital-signal-hero.png"}
+            src="/images/orbital-signal-hero-light.png"
             alt=""
             fill
             priority
