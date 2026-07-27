@@ -1,5 +1,7 @@
 # Portfolio Project Context
 
+This file reflects the current portfolio implementation state as of 2026-07-28.
+
 You are building a **single-page freelance portfolio website** for:
 
 - **Name:** Rohit Man Shrestha
@@ -31,7 +33,7 @@ Anyone who wants to:
 
 ## Content & Sections (One-page with smooth scrolling)
 
-Use this order:
+Baseline requirement order:
 
 1. Hero
 2. About
@@ -40,6 +42,18 @@ Use this order:
 5. Blog/Insights (simple starter section with placeholders)
 6. Contact
 7. Footer
+
+Current implementation order in `app/page.tsx`:
+
+1. Hero
+2. Work (Featured projects block with 3 cards)
+3. Services
+4. Stack (technology showcase)
+5. Principles
+6. About
+7. Notes (Blog/Insights placeholder section)
+8. Contact
+9. Footer
 
 ## Must-have features
 
@@ -57,6 +71,15 @@ Use this order:
    - content/message
 - Contact form must use anti-spam protection (honeypot and/or captcha pattern).
 - Allow resume/CV download.
+
+Current implementation status:
+
+- Hero CTA is present exactly as required with label **“Let’s work together”**.
+- Portfolio/CV download action is present via `/ROHIT_CV_2025.pdf` as “Download portfolio”.
+- Sticky floating contact button is implemented.
+- Contact details include email, LinkedIn, GitHub, and an inline form.
+- Form fields include email, subject, and message, with honeypot anti-spam.
+- Footer currently has branding/back-to-top and can be extended to include social links explicitly.
 
 ## Content scope
 
@@ -82,7 +105,12 @@ Must include:
 - TypeScript
 - React
 - AI Agents
-  Also include 1–2 complementary skills (choose best fit, e.g., TRPC, Tailwind, MongoDB, TDD).
+ Also include 1–2 complementary skills (choose best fit, e.g., TRPC, Tailwind, MongoDB, TDD).
+
+Current implementation already includes all required skills plus:
+
+- Next.js, React, TypeScript, Node.js, AI Agents
+- Additional stack shown: tRPC, MongoDB, Tailwind CSS, Jest, Vercel
 
 ## Technical requirements
 
@@ -92,6 +120,15 @@ Must include:
 - Include a lightweight dark mode toggle.
 - Add minimal accessible defaults (keyboard/focus states, semantic labels).
 - Implement with reusable components and clean layout.
+
+Current implementation status:
+
+- Uses App Router with `app/page.tsx` and `app/layout.tsx`.
+- Tailwind import plus custom CSS variables in `app/globals.css`.
+- Light/dark toggle via `html.light` class is wired.
+- Smooth scrolling and reduced-motion fallback are present.
+- Focus-visible and accessible labels are implemented for key controls.
+- Current structure is monolithic in `app/page.tsx` with reusable helper components for icon sections and data-driven arrays; future refactor into dedicated components is optional.
 
 ## Deployment
 
