@@ -16,6 +16,9 @@ export const metadata: Metadata = {
   title: "Rohit Man Shrestha | Senior Software Developer",
   description:
     "Freelance full stack portfolio of Rohit Man Shrestha: Next.js, Node.js, and TypeScript development.",
+  icons: {
+    icon: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

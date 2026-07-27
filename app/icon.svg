@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <title>Rohit Man Shrestha</title>
+  <rect width="64" height="64" rx="14" fill="#071116"/>
+  <path fill="#F6FBFC" d="M9 48V16h14.7c8.4 0 12.8 4 12.8 10.6 0 4.3-2.2 7.7-6.2 9.5L38 48h-8.3l-6.6-9.8H17V48H9Zm8-15.8h6.4c3.7 0 5.6-1.8 5.6-5 0-3.3-1.9-5-5.6-5H17v10Z"/>
+  <path fill="#F6FBFC" d="M40 48V16h5.7l5.9 12.2L57.4 16H61v32h-6.9V30.9l-3.8 7.9h-2l-3.8-7.9V48H40Z" transform="translate(-3 0) scale(.96 1)"/>
+  <circle cx="54" cy="11" r="4" fill="#22D3EE"/>
+</svg>
